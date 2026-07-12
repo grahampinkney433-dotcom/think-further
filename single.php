@@ -11,7 +11,9 @@ while ( have_posts() ) :
 	the_post();
 	?>
 
-	<article <?php post_class( 'single-post' ); ?>>
+	<div class="reading-progress" aria-hidden="true"><span class="reading-progress__bar" data-progress-bar></span></div>
+
+	<article <?php post_class( 'single-post' ); ?> data-progress-target>
 		<header class="page-hero theme-dark">
 			<div class="page-hero__grid" aria-hidden="true"></div>
 			<div class="container container--prose">

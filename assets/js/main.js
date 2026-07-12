@@ -158,6 +158,32 @@
 	}
 
 	/* ------------------------------------------------------------
+	 * Reading progress bar (single posts)
+	 * ---------------------------------------------------------- */
+	var progressBar = document.querySelector('[data-progress-bar]');
+	var progressTarget = document.querySelector('[data-progress-target]');
+	if (progressBar && progressTarget) {
+		var progressRaf = null;
+		var updateProgress = function () {
+			progressRaf = null;
+			var rect = progressTarget.getBoundingClientRect();
+			var total = rect.height - window.innerHeight;
+			var progress = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 1;
+			progressBar.style.transform = 'scaleX(' + progress.toFixed(4) + ')';
+		};
+		window.addEventListener(
+			'scroll',
+			function () {
+				if (!progressRaf) {
+					progressRaf = requestAnimationFrame(updateProgress);
+				}
+			},
+			{ passive: true }
+		);
+		updateProgress();
+	}
+
+	/* ------------------------------------------------------------
 	 * Hero canvas: drifting signal field
 	 * A quiet grid of points displaced by layered sine waves —
 	 * points near the pointer brighten and lift.

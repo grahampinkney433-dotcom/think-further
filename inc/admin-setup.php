@@ -23,6 +23,7 @@ function tf_setup_page_map() {
 		'ai-consultancy' => array( __( 'AI Consultancy', 'thinkfurther' ), 'page-templates/ai-transformation.php' ),
 		'ai-search'      => array( __( 'AI Search', 'thinkfurther' ), 'page-templates/ai-search.php' ),
 		'approach'       => array( __( 'Approach', 'thinkfurther' ), 'page-templates/approach.php' ),
+		'about'          => array( __( 'About', 'thinkfurther' ), 'page-templates/about.php' ),
 		'contact'        => array( __( 'Contact', 'thinkfurther' ), 'page-templates/contact.php' ),
 		'insights'       => array( __( 'Insights', 'thinkfurther' ), '' ),
 	);
@@ -88,7 +89,7 @@ function tf_setup_render_page() {
 		<table class="widefat striped" style="max-width:44em">
 			<tbody>
 				<tr>
-					<td><?php esc_html_e( 'Core pages (Home, AI Consultancy, AI Search, Approach, Contact, Insights)', 'thinkfurther' ); ?></td>
+					<td><?php esc_html_e( 'Core pages (Home, AI Consultancy, AI Search, Approach, About, Contact, Insights)', 'thinkfurther' ); ?></td>
 					<td><?php echo $status['pages'] ? '&#10003;' : '&mdash;'; ?></td>
 				</tr>
 				<tr>
@@ -179,7 +180,7 @@ function tf_run_setup() {
 		if ( ! is_wp_error( $menu_id ) ) {
 			$items = wp_get_nav_menu_items( $menu_id );
 			if ( empty( $items ) ) {
-				foreach ( array( 'ai-consultancy', 'ai-search', 'approach', 'contact' ) as $slug ) {
+				foreach ( array( 'ai-consultancy', 'ai-search', 'approach', 'about', 'contact' ) as $slug ) {
 					if ( isset( $ids[ $slug ] ) ) {
 						wp_update_nav_menu_item(
 							$menu_id,

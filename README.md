@@ -21,6 +21,10 @@ The repository root **is** the theme root (`style.css` lives at the top level), 
 
 Add engagements under **Case Studies** in wp-admin (client, sector and headline result live in the *Case Study Details* box). They appear at `/work/`, and the homepage automatically shows a "Selected work" section once at least one is published.
 
+## SEO & machine readability
+
+Built in (and automatically disabled if Yoast or Rank Math is active): meta descriptions, Open Graph/Twitter cards (using the post's featured image), ProfessionalService JSON-LD, FAQPage JSON-LD on the service pages, and a live-generated **`/llms.txt`** describing the firm, services, case studies and latest insights to AI crawlers. If `/llms.txt` 404s after deployment, run **Appearance → Theme Setup** once (it refreshes rewrite rules).
+
 ## Contact form
 
 The contact page includes a native form (nonce-verified, honeypot-protected) that emails the address set in the Customizer via `wp_mail()`. For reliable delivery, pair it with any SMTP plugin (e.g. WP Mail SMTP).

@@ -1419,6 +1419,52 @@ html.no-io .reveal {
 	line-height: 1.7;
 }
 
+/* ---------- About page ---------- */
+
+@media (min-width: 1024px) {
+	.offer-grid--three {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+.about-links {
+	display: grid;
+	gap: 0.9rem;
+	justify-items: start;
+	margin-top: 1.5rem;
+}
+
+/* ---------- Reading progress (single posts) ---------- */
+
+.reading-progress {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 2px;
+	z-index: 1001;
+	pointer-events: none;
+}
+
+.admin-bar .reading-progress {
+	top: 32px;
+}
+
+@media (max-width: 782px) {
+	.admin-bar .reading-progress {
+		top: 46px;
+	}
+}
+
+.reading-progress__bar {
+	display: block;
+	height: 100%;
+	width: 100%;
+	background: var(--signal);
+	transform: scaleX(0);
+	transform-origin: left;
+}
+
 /* ---------- Principles (approach page) ---------- */
 
 .principles {

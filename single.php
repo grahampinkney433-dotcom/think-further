@@ -73,6 +73,38 @@ while ( have_posts() ) :
 	</article>
 
 	<?php
+	$tf_related_args = array(
+		'posts_per_page'      => 3,
+		'post__not_in'        => array( get_the_ID() ),
+		'ignore_sticky_posts' => true,
+		'no_found_rows'       => true,
+	);
+	$tf_categories    = wp_get_post_categories( get_the_ID() );
+	if ( $tf_categories ) {
+		$tf_related_args['category__in'] = $tf_categories;
+	}
+	$tf_related = new WP_Query( $tf_related_args );
+	if ( $tf_related->have_posts() ) :
+		?>
+		<section class="insights section section--tight related" aria-label="<?php esc_attr_e( 'Related articles', 'thinkfurther' ); ?>">
+			<div class="container">
+				<div class="section-head">
+					<?php tf_eyebrow( __( 'Keep reading', 'thinkfurther' ), 'reveal' ); ?>
+					<h2 class="section-head__title reveal"><?php esc_html_e( 'Related thinking.', 'thinkfurther' ); ?></h2>
+				</div>
+				<div class="insights__grid">
+					<?php
+					while ( $tf_related->have_posts() ) :
+						$tf_related->the_post();
+						get_template_part( 'template-parts/content', 'card' );
+					endwhile;
+					wp_reset_postdata();
+					?>
+				</div>
+			</div>
+		</section>
+		<?php
+	endif;
 endwhile;
 
 get_template_part( 'template-parts/cta' );

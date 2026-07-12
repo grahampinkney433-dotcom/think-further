@@ -84,6 +84,33 @@ get_template_part(
 </section>
 
 <?php
+tf_faq_section(
+	__( 'Questions', 'thinkfurther' ),
+	__( 'AI search, *answered directly.*', 'thinkfurther' ),
+	array(
+		array(
+			__( 'What is AI search optimisation?', 'thinkfurther' ),
+			__( 'The practice of improving how AI assistants and answer engines — ChatGPT, Claude, Perplexity, Gemini, AI Overviews — describe, recommend and cite your business. It is sometimes called AEO or GEO; we treat it as a measurable channel with its own audit, playbook and monitoring.', 'thinkfurther' ),
+		),
+		array(
+			__( 'How is it different from SEO?', 'thinkfurther' ),
+			__( 'SEO optimises for a ranked list of links; AI search optimisation targets a synthesised answer. The levers overlap but differ: entity clarity, citation-worthy third-party sources, verifiable claims and machine-readable structure matter more than keywords and backlink volume alone. Good SEO helps — it is no longer sufficient.', 'thinkfurther' ),
+		),
+		array(
+			__( 'Can AI visibility actually be measured?', 'thinkfurther' ),
+			__( 'Yes. We run structured panels of real buyer questions across the major assistants and track whether you are named, how you are described, what gets cited and how that compares to competitors — a repeatable baseline we report against, movement by movement.', 'thinkfurther' ),
+		),
+		array(
+			__( 'How long before we see movement?', 'thinkfurther' ),
+			__( 'Some retrieval-driven surfaces respond within weeks of content and entity fixes; presence in model training data shifts more slowly. We sequence the programme so fast-moving surfaces fund patience for the slower ones, and the monitoring shows both.', 'thinkfurther' ),
+		),
+		array(
+			__( 'Do we need the transformation practice too?', 'thinkfurther' ),
+			__( 'No — AI search engagements stand alone. But the two compound: the same understanding of how models retrieve and reason informs both practices, and clients frequently expand from one into the other once the first set of results lands.', 'thinkfurther' ),
+		),
+	)
+);
+
 while ( have_posts() ) :
 	the_post();
 	if ( trim( get_the_content() ) ) :

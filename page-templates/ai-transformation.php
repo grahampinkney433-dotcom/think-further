@@ -85,6 +85,33 @@ get_template_part(
 </section>
 
 <?php
+tf_faq_section(
+	__( 'Questions', 'thinkfurther' ),
+	__( 'What leadership teams *ask us first.*', 'thinkfurther' ),
+	array(
+		array(
+			__( 'How do engagements usually start?', 'thinkfurther' ),
+			__( 'Almost always with the AI Opportunity Audit: a fixed-scope diagnostic that maps where AI creates value in your specific business. It gives both sides evidence before any larger commitment, and it stands alone even if we never work together again.', 'thinkfurther' ),
+		),
+		array(
+			__( 'Do we need our data in perfect shape first?', 'thinkfurther' ),
+			__( 'No. Perfect data is a myth that delays useful work. We design around the data you actually have, fix what genuinely blocks value, and treat data improvement as an output of the roadmap rather than a prerequisite for starting.', 'thinkfurther' ),
+		),
+		array(
+			__( 'Which models and tools do you work with?', 'thinkfurther' ),
+			__( 'We are vendor-neutral. We work across the major model providers and your existing stack, and we recommend based on your requirements for capability, cost, data residency and governance — never on partnerships or resale margins.', 'thinkfurther' ),
+		),
+		array(
+			__( 'How do you charge?', 'thinkfurther' ),
+			__( 'Fixed fees for defined diagnostics and strategy work, and agreed delivery phases for builds — each with baselines and success measures set before we start. No open-ended day rates and no surprise scope.', 'thinkfurther' ),
+		),
+		array(
+			__( 'What about security, privacy and governance?', 'thinkfurther' ),
+			__( 'Governance is part of the design, not an afterthought: usage policy, access control, data boundaries and human-in-the-loop checkpoints are specified alongside every system we ship, and documented so your team can operate them.', 'thinkfurther' ),
+		),
+	)
+);
+
 // Surface any content added to this page in wp-admin.
 while ( have_posts() ) :
 	the_post();

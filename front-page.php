@@ -198,6 +198,42 @@ get_header();
 	</div>
 </section>
 
+<!-- ============ SELECTED WORK ============ -->
+<?php
+$tf_cases = new WP_Query(
+	array(
+		'post_type'      => 'tf_case_study',
+		'posts_per_page' => 3,
+		'no_found_rows'  => true,
+	)
+);
+if ( $tf_cases->have_posts() ) :
+	?>
+	<section class="work section" aria-label="<?php esc_attr_e( 'Selected work', 'thinkfurther' ); ?>">
+		<div class="container">
+			<div class="section-head section-head--split">
+				<div>
+					<?php tf_eyebrow( __( 'Selected work', 'thinkfurther' ), 'reveal' ); ?>
+					<h2 class="section-head__title reveal"><?php echo wp_kses( tf_headline( __( 'Measured, *not claimed.*', 'thinkfurther' ) ), array( 'em' => array() ) ); ?></h2>
+				</div>
+				<div class="reveal">
+					<?php tf_arrow_link( get_post_type_archive_link( 'tf_case_study' ), __( 'All case studies', 'thinkfurther' ) ); ?>
+				</div>
+			</div>
+
+			<div class="case-grid">
+				<?php
+				while ( $tf_cases->have_posts() ) :
+					$tf_cases->the_post();
+					get_template_part( 'template-parts/content', 'case' );
+				endwhile;
+				wp_reset_postdata();
+				?>
+			</div>
+		</div>
+	</section>
+<?php endif; ?>
+
 <!-- ============ INSIGHTS ============ -->
 <?php
 $tf_latest = new WP_Query(

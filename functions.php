@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'TF_THEME_VERSION', '1.0.0' );
+define( 'TF_THEME_VERSION', '1.1.0' );
 define( 'TF_THEME_DIR', get_template_directory() );
 define( 'TF_THEME_URI', get_template_directory_uri() );
 
@@ -17,6 +17,11 @@ require TF_THEME_DIR . '/inc/setup.php';
 require TF_THEME_DIR . '/inc/customizer.php';
 require TF_THEME_DIR . '/inc/template-tags.php';
 require TF_THEME_DIR . '/inc/contact-form.php';
+require TF_THEME_DIR . '/inc/case-studies.php';
+
+if ( is_admin() ) {
+	require TF_THEME_DIR . '/inc/admin-setup.php';
+}
 
 /**
  * Enqueue front-end assets.

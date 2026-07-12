@@ -105,6 +105,62 @@ function tf_post_meta() {
 }
 
 /**
+ * Render an FAQ section (accessible details/summary accordion)
+ * and print matching FAQPage JSON-LD.
+ *
+ * @param string $eyebrow Section eyebrow.
+ * @param string $title   Section title (supports *emphasis*).
+ * @param array  $faqs    Array of [ question, answer ] pairs.
+ */
+function tf_faq_section( $eyebrow, $title, $faqs ) {
+	if ( empty( $faqs ) ) {
+		return;
+	}
+	?>
+	<section class="section faq-section" aria-label="<?php echo esc_attr( $eyebrow ); ?>">
+		<div class="container">
+			<div class="split">
+				<div class="split__lead">
+					<?php tf_eyebrow( $eyebrow, 'reveal' ); ?>
+					<h2 class="section-head__title reveal"><?php echo wp_kses( tf_headline( $title ), array( 'em' => array() ) ); ?></h2>
+				</div>
+				<div class="split__body">
+					<div class="faq-list reveal">
+						<?php foreach ( $faqs as $faq ) : ?>
+							<details class="faq">
+								<summary class="faq__q">
+									<span><?php echo esc_html( $faq[0] ); ?></span>
+									<span class="faq__icon" aria-hidden="true"></span>
+								</summary>
+								<div class="faq__a"><p><?php echo esc_html( $faq[1] ); ?></p></div>
+							</details>
+						<?php endforeach; ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<?php
+
+	$schema = array(
+		'@context'   => 'https://schema.org',
+		'@type'      => 'FAQPage',
+		'mainEntity' => array(),
+	);
+	foreach ( $faqs as $faq ) {
+		$schema['mainEntity'][] = array(
+			'@type'          => 'Question',
+			'name'           => $faq[0],
+			'acceptedAnswer' => array(
+				'@type' => 'Answer',
+				'text'  => $faq[1],
+			),
+		);
+	}
+	echo '<script type="application/ld+json">' . wp_json_encode( $schema ) . '</script>' . "\n";
+}
+
+/**
  * Estimated reading time for the current post.
  *
  * @return string

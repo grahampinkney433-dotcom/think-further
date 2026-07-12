@@ -173,6 +173,12 @@ p {
 	padding-block: var(--space-section);
 }
 
+/* Keep anchored sections clear of the sticky header */
+section[id],
+[id="main"] {
+	scroll-margin-top: 5.5rem;
+}
+
 .section--tight {
 	padding-block: var(--space-section-tight);
 }
@@ -569,7 +575,7 @@ html.no-io .reveal {
 
 .hero__headline {
 	font-size: var(--text-h1);
-	max-width: 13ch;
+	max-width: 15ch;
 	margin-bottom: 0.5em;
 }
 

@@ -81,6 +81,70 @@ remove_action( 'wp_head', 'rsd_link' );
 remove_action( 'wp_head', 'wp_shortlink_wp_head' );
 
 /**
+ * Structured data: Organization + WebSite JSON-LD.
+ * Skipped automatically if an SEO plugin already prints schema.
+ */
+function tf_structured_data() {
+	if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) ) {
+		return;
+	}
+
+	$organization = array(
+		'@context'    => 'https://schema.org',
+		'@type'       => 'ProfessionalService',
+		'name'        => get_bloginfo( 'name' ),
+		'url'         => home_url( '/' ),
+		'description' => __( 'AI consultancy with two practices: business AI consultancy and transformation, and AI search visibility and optimisation.', 'thinkfurther' ),
+		'email'       => sanitize_email( tf_option( 'tf_contact_email' ) ),
+		'knowsAbout'  => array(
+			'AI strategy',
+			'AI transformation',
+			'Agentic workflows',
+			'AI search optimisation',
+			'Answer engine optimisation',
+			'Generative engine optimisation',
+		),
+	);
+
+	$linkedin = tf_option( 'tf_linkedin_url' );
+	if ( $linkedin ) {
+		$organization['sameAs'] = array( $linkedin );
+	}
+
+	if ( has_custom_logo() ) {
+		$logo_id  = get_theme_mod( 'custom_logo' );
+		$logo_src = wp_get_attachment_image_src( $logo_id, 'full' );
+		if ( $logo_src ) {
+			$organization['logo'] = $logo_src[0];
+		}
+	}
+
+	echo '<script type="application/ld+json">' . wp_json_encode( $organization ) . '</script>' . "\n";
+}
+add_action( 'wp_head', 'tf_structured_data', 5 );
+
+/**
+ * Meta description fallback for key pages (skipped if an SEO plugin is active).
+ */
+function tf_meta_description() {
+	if ( defined( 'WPSEO_VERSION' ) || defined( 'RANK_MATH_VERSION' ) ) {
+		return;
+	}
+
+	$description = '';
+	if ( is_front_page() ) {
+		$description = tf_option( 'tf_hero_subline' );
+	} elseif ( is_singular() && has_excerpt() ) {
+		$description = get_the_excerpt();
+	}
+
+	if ( $description ) {
+		printf( '<meta name="description" content="%s">' . "\n", esc_attr( wp_strip_all_tags( $description ) ) );
+	}
+}
+add_action( 'wp_head', 'tf_meta_description', 4 );
+
+/**
  * Disable emoji scripts (unused, saves a request).
  */
 function tf_disable_emojis() {

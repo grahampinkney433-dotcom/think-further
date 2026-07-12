@@ -43,6 +43,14 @@ function tf_setup() {
 
 	set_post_thumbnail_size( 1280, 720, true );
 	add_image_size( 'tf-card', 720, 480, true );
+
+	add_theme_support( 'editor-styles' );
+	add_editor_style(
+		array(
+			'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap',
+			'assets/css/editor-style.css',
+		)
+	);
 }
 add_action( 'after_setup_theme', 'tf_setup' );
 

@@ -1,0 +1,44 @@
+/*
+ * Block editor styles: mirror the front-end reading experience
+ * so content editing in wp-admin feels true to the site.
+ */
+
+body {
+	font-family: "Inter", -apple-system, "Segoe UI", sans-serif;
+	font-size: 1.125rem;
+	line-height: 1.75;
+	color: #16181d;
+	background: #f5f3ee;
+}
+
+.editor-styles-wrapper h1,
+.editor-styles-wrapper h2,
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4 {
+	font-family: "Fraunces", Georgia, serif;
+	font-weight: 420;
+	line-height: 1.1;
+	letter-spacing: -0.015em;
+}
+
+.editor-styles-wrapper a {
+	color: #2b41e8;
+}
+
+.editor-styles-wrapper blockquote {
+	border-left: 2px solid #2b41e8;
+	padding-left: 1.5rem;
+	font-family: "Fraunces", Georgia, serif;
+	font-style: italic;
+}
+
+.editor-styles-wrapper :not(pre) > code {
+	font-family: "IBM Plex Mono", monospace;
+	background: #ebe8e0;
+	padding: 0.15em 0.4em;
+	border-radius: 3px;
+}
+
+.wp-block {
+	max-width: 46rem;
+}

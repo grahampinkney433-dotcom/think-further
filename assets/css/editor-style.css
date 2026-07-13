@@ -1,40 +1,48 @@
 /*
  * Block editor styles: mirror the front-end reading experience
  * so content editing in wp-admin feels true to the site.
+ * Brand v1.0: Space Grotesk / IBM Plex Sans / IBM Plex Mono.
  */
 
 body {
-	font-family: "Inter", -apple-system, "Segoe UI", sans-serif;
-	font-size: 1.125rem;
-	line-height: 1.75;
-	color: #16181d;
-	background: #f5f3ee;
+	font-family: "IBM Plex Sans", system-ui, sans-serif;
+	font-size: 1.0625rem;
+	line-height: 1.6;
+	color: #464c59;
+	background: #f6f7f9;
 }
 
 .editor-styles-wrapper h1,
 .editor-styles-wrapper h2,
 .editor-styles-wrapper h3,
 .editor-styles-wrapper h4 {
-	font-family: "Fraunces", Georgia, serif;
-	font-weight: 420;
-	line-height: 1.1;
-	letter-spacing: -0.015em;
+	font-family: "Space Grotesk", sans-serif;
+	font-weight: 600;
+	line-height: 1.04;
+	letter-spacing: -0.02em;
+	color: #0b0d12;
+}
+
+.editor-styles-wrapper h3,
+.editor-styles-wrapper h4 {
+	font-weight: 500;
+	letter-spacing: -0.01em;
 }
 
 .editor-styles-wrapper a {
-	color: #2b41e8;
+	color: #2b34e0;
 }
 
 .editor-styles-wrapper blockquote {
-	border-left: 2px solid #2b41e8;
+	border-left: 2px solid #2b34e0;
 	padding-left: 1.5rem;
-	font-family: "Fraunces", Georgia, serif;
 	font-style: italic;
+	color: #0b0d12;
 }
 
 .editor-styles-wrapper :not(pre) > code {
 	font-family: "IBM Plex Mono", monospace;
-	background: #ebe8e0;
+	background: #e6e8ee;
 	padding: 0.15em 0.4em;
 	border-radius: 3px;
 }

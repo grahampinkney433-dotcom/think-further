@@ -15,7 +15,7 @@
 			</h2>
 			<p class="cta-band__desc"><?php esc_html_e( 'A 30-minute call. We\'ll tell you honestly where AI can move your numbers — and where it can\'t.', 'thinkfurther' ); ?></p>
 			<div class="cta-band__actions">
-				<a class="btn btn--light btn--lg" href="<?php echo esc_url( tf_cta_url() ); ?>">
+				<a class="btn btn--volt btn--lg" href="<?php echo esc_url( tf_cta_url() ); ?>">
 					<?php echo esc_html( tf_option( 'tf_hero_cta' ) ); ?>
 					<span aria-hidden="true">&rarr;</span>
 				</a>

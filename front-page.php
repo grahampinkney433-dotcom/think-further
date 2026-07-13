@@ -18,7 +18,7 @@ get_header();
 		</h1>
 		<p class="hero__subline reveal"><?php echo esc_html( tf_option( 'tf_hero_subline' ) ); ?></p>
 		<div class="hero__actions reveal">
-			<a class="btn btn--light btn--lg" href="<?php echo esc_url( tf_cta_url() ); ?>">
+			<a class="btn btn--volt btn--lg" href="<?php echo esc_url( tf_cta_url() ); ?>">
 				<?php echo esc_html( tf_option( 'tf_hero_cta' ) ); ?>
 				<span aria-hidden="true">&rarr;</span>
 			</a>

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'TF_THEME_VERSION', '1.2.0' );
+define( 'TF_THEME_VERSION', '2.0.0' );
 define( 'TF_THEME_DIR', get_template_directory() );
 define( 'TF_THEME_URI', get_template_directory_uri() );
 
@@ -28,10 +28,10 @@ if ( is_admin() ) {
  * Enqueue front-end assets.
  */
 function tf_enqueue_assets() {
-	// Typography: Fraunces (display serif), Inter (body), IBM Plex Mono (labels).
+	// Brand typography: Space Grotesk (display), IBM Plex Sans (body), IBM Plex Mono (labels).
 	wp_enqueue_style(
 		'tf-fonts',
-		'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap',
+		'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap',
 		array(),
 		null
 	);

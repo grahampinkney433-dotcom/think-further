@@ -46,7 +46,7 @@ function tf_setup() {
 	add_theme_support( 'editor-styles' );
 	add_editor_style(
 		array(
-			'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap',
+			'https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap',
 			'assets/css/editor-style.css',
 		)
 	);
@@ -119,6 +119,10 @@ function tf_page_url_by_template( $template, $fallback ) {
 function tf_body_classes( $classes ) {
 	if ( is_front_page() ) {
 		$classes[] = 'tf-home';
+	}
+	// Two-arm brand cue: AI-search content picks up Beam.
+	if ( is_page_template( 'page-templates/ai-search.php' ) ) {
+		$classes[] = 'tf-arm-search';
 	}
 	return $classes;
 }

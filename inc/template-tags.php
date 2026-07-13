@@ -31,14 +31,15 @@ function tf_logo() {
 	?>
 	<a class="site-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" aria-label="<?php esc_attr_e( 'Think Further — home', 'thinkfurther' ); ?>">
 		<span class="site-logo__mark" aria-hidden="true">
-			<svg viewBox="0 0 32 32" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<circle cx="10" cy="16" r="7.25" stroke="currentColor" stroke-width="1.5"/>
-				<circle cx="20" cy="16" r="7.25" stroke="currentColor" stroke-width="1.5"/>
-				<path d="M25.5 16h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-				<path d="M28.1 13.6 30.5 16l-2.4 2.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+			<svg viewBox="0 0 64 64" width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+				<rect width="64" height="64" rx="16" fill="#2B34E0"/>
+				<g transform="translate(15,15) scale(1.2143)">
+					<path d="M4 14 H19" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+					<path d="M14.5 8 L20.5 14 L14.5 20" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+				</g>
 			</svg>
 		</span>
-		<span class="site-logo__text">Think<span class="site-logo__accent">Further</span></span>
+		<span class="site-logo__text">Think Further<span class="site-logo__dot">.</span></span>
 	</a>
 	<?php
 }

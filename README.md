@@ -43,6 +43,13 @@ assets/css/main.css    Full design system (design tokens at the top)
 assets/js/main.js      Canvas hero, scroll reveals, counters, nav — no dependencies
 ```
 
-## Editing the design
+## Brand system (v1.0)
 
-All colour, type and spacing tokens are CSS custom properties at the top of `assets/css/main.css`. Typography: Fraunces (display), Inter (body), IBM Plex Mono (labels), loaded from Google Fonts.
+The theme implements the official Think Further identity:
+
+- **Colour** — Ink `#0B0D12` / Paper `#F6F7F9` neutrals; **Signal Indigo `#2B34E0`** as the primary decision colour; **Volt `#CDF94E`** as the rationed energy accent (CTAs, headline emphasis, markers — never large fills or small text on white); **Beam `#29D3C2`** (`#0B7768` text-safe) cues the AI-search arm. 60/30/10 usage.
+- **Typography** — Space Grotesk (display, 600), IBM Plex Sans (body, 17px), IBM Plex Mono (labels, 12px/0.16em uppercase), from Google Fonts.
+- **System** — 1120px max width, 8-pt spacing, 6px/16px radii, one shadow token, and the signature motifs: forward arrow, fine grid, indigo mesh.
+- **Two-arm cue** — pages using the AI Search template get a `tf-arm-search` body class that switches accent tokens (`--arm-light`/`--arm-dark`) from Indigo/Volt to Beam.
+
+All tokens are CSS custom properties at the top of `assets/css/main.css`. Official logo SVGs ship in `assets/img/`.

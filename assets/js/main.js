@@ -246,10 +246,11 @@
 				}
 
 				var size = 1 + influence * 1.6;
+				// Brand: indigo mesh, charged by volt at the pointer.
 				if (influence > 0.08) {
-					ctx.fillStyle = 'rgba(217, 255, 91, ' + alpha.toFixed(3) + ')';
+					ctx.fillStyle = 'rgba(205, 249, 78, ' + alpha.toFixed(3) + ')';
 				} else {
-					ctx.fillStyle = 'rgba(147, 162, 255, ' + alpha.toFixed(3) + ')';
+					ctx.fillStyle = 'rgba(110, 120, 255, ' + alpha.toFixed(3) + ')';
 				}
 				ctx.beginPath();
 				ctx.arc(px, py, size, 0, Math.PI * 2);

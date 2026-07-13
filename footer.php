@@ -16,7 +16,7 @@
 			</div>
 
 			<div class="site-footer__cta">
-				<p class="site-footer__cta-heading"><?php esc_html_e( 'Ready to think further?', 'thinkfurther' ); ?></p>
+				<p class="site-footer__cta-heading"><?php esc_html_e( 'Ready to look further?', 'thinkfurther' ); ?></p>
 				<a class="btn btn--light btn--lg" href="<?php echo esc_url( tf_cta_url() ); ?>">
 					<?php echo esc_html( tf_option( 'tf_hero_cta' ) ); ?>
 					<span aria-hidden="true">&rarr;</span>
@@ -58,8 +58,8 @@
 		</div>
 
 		<div class="site-footer__bottom">
-			<p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> Think Further. <?php esc_html_e( 'All rights reserved.', 'thinkfurther' ); ?></p>
-			<p class="site-footer__domain">thinkfurther.ai</p>
+			<p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> Alugence. <?php esc_html_e( 'All rights reserved.', 'thinkfurther' ); ?></p>
+			<p class="site-footer__domain">alugence.ai</p>
 		</div>
 	</div>
 </footer>

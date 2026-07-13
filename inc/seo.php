@@ -38,9 +38,9 @@ function tf_get_meta_description() {
 		$map = array(
 			'ai-consultancy' => __( 'AI consultancy and transformation for ambitious businesses: opportunity audits, strategy, custom AI systems and agentic workflows — measured against baselines you agree before we start.', 'thinkfurther' ),
 			'ai-search'      => __( 'AI search consultancy: measure and improve how ChatGPT, Claude, Perplexity, Gemini and AI Overviews describe, recommend and cite your business.', 'thinkfurther' ),
-			'approach'       => __( 'How Think Further works: evidence before enthusiasm, small senior teams, working software over slideware, and capability transfer by design.', 'thinkfurther' ),
-			'contact'        => __( 'Talk to Think Further about AI transformation or AI search visibility. We reply within one working day.', 'thinkfurther' ),
-			'about'          => __( 'Think Further is an AI consultancy with two practices: business AI transformation, and AI search visibility — one firm for being capable with AI and found by it.', 'thinkfurther' ),
+			'approach'       => __( 'How Alugence works: evidence before enthusiasm, small senior teams, working software over slideware, and capability transfer by design.', 'thinkfurther' ),
+			'contact'        => __( 'Talk to Alugence about AI transformation or AI search visibility. We reply within one working day.', 'thinkfurther' ),
+			'about'          => __( 'Alugence is an AI consultancy with two practices: business AI transformation, and AI search visibility — one firm for being capable with AI and found by it.', 'thinkfurther' ),
 		);
 		$slug = get_post_field( 'post_name', get_queried_object_id() );
 		if ( isset( $map[ $slug ] ) ) {
@@ -186,7 +186,7 @@ function tf_llms_output() {
 	$lines[] = '';
 	$lines[] = '> ' . wp_strip_all_tags( tf_option( 'tf_hero_subline' ) );
 	$lines[] = '';
-	$lines[] = wp_strip_all_tags( __( 'Think Further is an AI consultancy with two practices: business AI consultancy and transformation (the core practice), and AI search consultancy (a specialised service line for visibility in ChatGPT, Claude, Perplexity, Gemini and AI Overviews). Contact:', 'thinkfurther' ) ) . ' ' . sanitize_email( tf_option( 'tf_contact_email' ) );
+	$lines[] = wp_strip_all_tags( __( 'Alugence is an AI consultancy with two practices: business AI consultancy and transformation (the core practice), and AI search consultancy (a specialised service line for visibility in ChatGPT, Claude, Perplexity, Gemini and AI Overviews). Contact:', 'thinkfurther' ) ) . ' ' . sanitize_email( tf_option( 'tf_contact_email' ) );
 	$lines[] = '';
 	$lines[] = '## Services';
 	$lines[] = '';

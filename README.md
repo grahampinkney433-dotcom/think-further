@@ -1,21 +1,21 @@
-# Think Further — WordPress Theme
+# Alugence — WordPress Theme
 
-Custom marketing theme for [thinkfurther.ai](https://thinkfurther.ai) — an AI consultancy with two practices: **business AI consultancy & transformation** (primary) and **AI search consultancy** (specialised service line).
+Custom marketing theme for [alugence.ai](https://alugence.ai) — an AI consultancy with two practices: **business AI consultancy & transformation** (primary) and **AI search consultancy** (specialised service line).
 
 Hand-built classic theme. No page builder, no build step, no plugin dependencies.
 
 ## Deploying with WP Pusher
 
 1. In wp-admin, install and activate [WP Pusher](https://wppusher.com/).
-2. Go to **WP Pusher → Install Theme**, connect GitHub, and enter this repository (`grahampinkney433-dotcom/think-further`), branch `main` (or your deploy branch).
-3. Install, then activate **Think Further** under **Appearance → Themes**.
+2. Go to **WP Pusher → Install Theme**, connect GitHub, and enter this repository (`grahampinkney433-dotcom/think-further` — the repo keeps its original name; the theme inside it is Alugence), branch `main` (or your deploy branch).
+3. Install, then activate **Alugence** under **Appearance → Themes**.
 
 The repository root **is** the theme root (`style.css` lives at the top level), so no subdirectory configuration is needed.
 
 ## Post-install setup (1 minute)
 
 1. Go to **Appearance → Theme Setup** and click **Run setup**. This creates the core pages with the right templates (Home, AI Consultancy, AI Search, Approach, Contact, Insights), assigns the navigation menu, sets the static homepage and posts page, and enables pretty permalinks. It's idempotent and never overwrites existing content.
-2. **Business details & hero copy** — Customise → **Think Further Options**: contact email, booking/calendar link, LinkedIn, hero headline, footer tagline. In headline fields, wrap words in `*asterisks*` for the italic serif accent (e.g. `The ones that win *think further.*`).
+2. **Business details & hero copy** — Customise → **Alugence Options**: contact email, booking/calendar link, LinkedIn, hero headline, footer tagline. In headline fields, wrap words in `*asterisks*` for the colour accent (e.g. `The ones that win *look further.*`).
 
 ## Case studies
 
@@ -45,7 +45,7 @@ assets/js/main.js      Canvas hero, scroll reveals, counters, nav — no depende
 
 ## Brand system (v1.0)
 
-The theme implements the official Think Further identity:
+The theme implements the official Alugence identity:
 
 - **Colour** — Ink `#0B0D12` / Paper `#F6F7F9` neutrals; **Signal Indigo `#2B34E0`** as the primary decision colour; **Volt `#CDF94E`** as the rationed energy accent (CTAs, headline emphasis, markers — never large fills or small text on white); **Beam `#29D3C2`** (`#0B7768` text-safe) cues the AI-search arm. 60/30/10 usage.
 - **Typography** — Space Grotesk (display, 600), IBM Plex Sans (body, 17px), IBM Plex Mono (labels, 12px/0.16em uppercase), from Google Fonts.

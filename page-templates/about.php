@@ -12,7 +12,7 @@ get_template_part(
 	'template-parts/page-hero',
 	null,
 	array(
-		'eyebrow' => __( 'About Think Further', 'thinkfurther' ),
+		'eyebrow' => __( 'About Alugence', 'thinkfurther' ),
 		'title'   => __( 'A consultancy built for the *AI decade.*', 'thinkfurther' ),
 		'subline' => __( 'Founded on a simple observation: the firms winning with AI aren\'t the ones with the biggest budgets — they\'re the ones thinking furthest ahead about how work, and being found, are changing.', 'thinkfurther' ),
 	)
@@ -28,7 +28,7 @@ get_template_part(
 			</div>
 			<div class="split__body">
 				<p class="reveal"><?php esc_html_e( 'On one side: big-firm AI strategy that costs six figures before anything ships. On the other: automation freelancers gluing tools together with no view of the business. And almost nobody treating the other half of the problem — how AI assistants describe and recommend you — as the distribution channel it has become.', 'thinkfurther' ); ?></p>
-				<p class="reveal"><?php esc_html_e( 'Think Further sits deliberately between and across: senior enough to work with leadership on what matters, hands-on enough to ship working systems in weeks, and specialised enough to treat AI search visibility as a first-class discipline rather than a footnote.', 'thinkfurther' ); ?></p>
+				<p class="reveal"><?php esc_html_e( 'Alugence sits deliberately between and across: senior enough to work with leadership on what matters, hands-on enough to ship working systems in weeks, and specialised enough to treat AI search visibility as a first-class discipline rather than a footnote.', 'thinkfurther' ); ?></p>
 			</div>
 		</div>
 	</div>

@@ -76,7 +76,7 @@ function tf_setup_render_page() {
 	$all_done = ! in_array( false, $status, true );
 	?>
 	<div class="wrap">
-		<h1><?php esc_html_e( 'Think Further — Theme Setup', 'thinkfurther' ); ?></h1>
+		<h1><?php esc_html_e( 'Alugence — Theme Setup', 'thinkfurther' ); ?></h1>
 
 		<?php if ( $did_run ) : ?>
 			<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'Setup complete. Pages, menu and homepage settings are configured.', 'thinkfurther' ); ?></p></div>
@@ -118,7 +118,7 @@ function tf_setup_render_page() {
 			printf(
 				/* translators: %s: customizer link. */
 				esc_html__( 'Afterwards, set your contact details and hero copy in %s.', 'thinkfurther' ),
-				'<a href="' . esc_url( admin_url( 'customize.php' ) ) . '">' . esc_html__( 'the Customizer under “Think Further Options”', 'thinkfurther' ) . '</a>'
+				'<a href="' . esc_url( admin_url( 'customize.php' ) ) . '">' . esc_html__( 'the Customizer under “Alugence Options”', 'thinkfurther' ) . '</a>'
 			);
 			?>
 		</p>
@@ -233,7 +233,7 @@ function tf_setup_notice() {
 	}
 	printf(
 		'<div class="notice notice-info"><p><strong>%s</strong> %s <a href="%s">%s</a></p></div>',
-		esc_html__( 'Think Further theme:', 'thinkfurther' ),
+		esc_html__( 'Alugence theme:', 'thinkfurther' ),
 		esc_html__( 'finish setting up the site structure (pages, menu, homepage) in one click.', 'thinkfurther' ),
 		esc_url( admin_url( 'themes.php?page=tf-setup' ) ),
 		esc_html__( 'Open Theme Setup', 'thinkfurther' )

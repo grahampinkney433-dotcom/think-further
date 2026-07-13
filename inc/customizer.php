@@ -19,7 +19,7 @@ function tf_customize_register( $wp_customize ) {
 	$wp_customize->add_panel(
 		'tf_theme_options',
 		array(
-			'title'    => __( 'Think Further Options', 'thinkfurther' ),
+			'title'    => __( 'Alugence Options', 'thinkfurther' ),
 			'priority' => 10,
 		)
 	);
@@ -35,7 +35,7 @@ function tf_customize_register( $wp_customize ) {
 	);
 
 	$contact_fields = array(
-		'tf_contact_email'  => array( __( 'Contact email', 'thinkfurther' ), 'hello@thinkfurther.ai', 'sanitize_email' ),
+		'tf_contact_email'  => array( __( 'Contact email', 'thinkfurther' ), 'hello@alugence.ai', 'sanitize_email' ),
 		'tf_booking_url'    => array( __( 'Booking / calendar link (optional)', 'thinkfurther' ), '', 'esc_url_raw' ),
 		'tf_linkedin_url'   => array( __( 'LinkedIn URL', 'thinkfurther' ), '', 'esc_url_raw' ),
 		'tf_location_label' => array( __( 'Location label', 'thinkfurther' ), 'United Kingdom · Working worldwide', 'sanitize_text_field' ),
@@ -71,7 +71,7 @@ function tf_customize_register( $wp_customize ) {
 
 	$hero_fields = array(
 		'tf_hero_eyebrow'  => array( __( 'Eyebrow label', 'thinkfurther' ), 'AI consultancy — strategy to search' ),
-		'tf_hero_headline' => array( __( 'Headline (use *asterisks* for italic serif emphasis)', 'thinkfurther' ), 'Most companies adopt AI. The ones that win *think further.*' ),
+		'tf_hero_headline' => array( __( 'Headline (use *asterisks* for colour emphasis)', 'thinkfurther' ), 'Most companies adopt AI. The ones that win *look further.*' ),
 		'tf_hero_subline'  => array( __( 'Supporting line', 'thinkfurther' ), 'We help ambitious businesses turn AI from scattered experiments into a durable advantage — from operational transformation to how you\'re found and cited by AI search.' ),
 		'tf_hero_cta'      => array( __( 'Primary CTA label', 'thinkfurther' ), 'Book a strategy call' ),
 	);
@@ -130,12 +130,12 @@ add_action( 'customize_register', 'tf_customize_register' );
  */
 function tf_option( $key ) {
 	$defaults = array(
-		'tf_contact_email'  => 'hello@thinkfurther.ai',
+		'tf_contact_email'  => 'hello@alugence.ai',
 		'tf_booking_url'    => '',
 		'tf_linkedin_url'   => '',
 		'tf_location_label' => 'United Kingdom · Working worldwide',
 		'tf_hero_eyebrow'   => 'AI consultancy — strategy to search',
-		'tf_hero_headline'  => 'Most companies adopt AI. The ones that win *think further.*',
+		'tf_hero_headline'  => 'Most companies adopt AI. The ones that win *look further.*',
 		'tf_hero_subline'   => 'We help ambitious businesses turn AI from scattered experiments into a durable advantage — from operational transformation to how you\'re found and cited by AI search.',
 		'tf_hero_cta'       => 'Book a strategy call',
 		'tf_footer_tagline' => 'An AI consultancy for businesses that intend to lead — not follow.',

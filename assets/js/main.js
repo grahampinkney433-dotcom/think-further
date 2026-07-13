@@ -1,5 +1,5 @@
 /**
- * Think Further — interactions.
+ * Alugence — interactions.
  * No dependencies. Everything degrades gracefully and
  * respects prefers-reduced-motion.
  */

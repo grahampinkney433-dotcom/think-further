@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Render a headline where *asterisk-wrapped* spans become italic serif emphasis.
+ * Render a headline where *asterisk-wrapped* spans become colour emphasis.
  *
  * @param string $text Raw headline text.
  * @return string Safe HTML.
@@ -21,7 +21,7 @@ function tf_headline( $text ) {
 }
 
 /**
- * Output the Think Further wordmark (custom logo if set, else built-in mark).
+ * Output the Alugence wordmark (custom logo if set, else built-in mark).
  */
 function tf_logo() {
 	if ( has_custom_logo() ) {
@@ -29,7 +29,7 @@ function tf_logo() {
 		return;
 	}
 	?>
-	<a class="site-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" aria-label="<?php esc_attr_e( 'Think Further — home', 'thinkfurther' ); ?>">
+	<a class="site-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" aria-label="<?php esc_attr_e( 'Alugence — home', 'thinkfurther' ); ?>">
 		<span class="site-logo__mark" aria-hidden="true">
 			<svg viewBox="0 0 64 64" width="64" height="64" xmlns="http://www.w3.org/2000/svg">
 				<rect width="64" height="64" rx="16" fill="#2B34E0"/>
@@ -39,7 +39,7 @@ function tf_logo() {
 				</g>
 			</svg>
 		</span>
-		<span class="site-logo__text">Think Further<span class="site-logo__dot">.</span></span>
+		<span class="site-logo__text">Alugence<span class="site-logo__dot">.</span></span>
 	</a>
 	<?php
 }

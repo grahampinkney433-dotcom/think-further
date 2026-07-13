@@ -14,7 +14,7 @@ while ( have_posts() ) :
 		'template-parts/page-hero',
 		null,
 		array(
-			'eyebrow' => __( 'Think Further', 'thinkfurther' ),
+			'eyebrow' => __( 'Alugence', 'thinkfurther' ),
 			'title'   => get_the_title(),
 		)
 	);

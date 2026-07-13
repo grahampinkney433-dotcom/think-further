@@ -74,7 +74,7 @@ get_template_part(
 				<h2 class="section-head__title reveal"><?php echo wp_kses( tf_headline( __( 'Visibility works best when the *business behind it does.*', 'thinkfurther' ) ), array( 'em' => array() ) ); ?></h2>
 			</div>
 			<div class="split__body">
-				<p class="reveal"><?php esc_html_e( 'AI search is a specialised practice within Think Further, not a separate agency. That matters: the same understanding of how models retrieve, reason and cite informs both how we build AI into your operations and how we position you inside everyone else\'s. Clients often start with a visibility audit and expand into transformation — or the reverse.', 'thinkfurther' ); ?></p>
+				<p class="reveal"><?php esc_html_e( 'AI search is a specialised practice within Alugence, not a separate agency. That matters: the same understanding of how models retrieve, reason and cite informs both how we build AI into your operations and how we position you inside everyone else\'s. Clients often start with a visibility audit and expand into transformation — or the reverse.', 'thinkfurther' ); ?></p>
 				<div class="reveal">
 					<?php tf_arrow_link( tf_page_url_by_template( 'page-templates/ai-transformation.php', '/ai-consultancy/' ), __( 'See the transformation practice', 'thinkfurther' ) ); ?>
 				</div>

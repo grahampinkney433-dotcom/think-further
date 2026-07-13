@@ -106,7 +106,8 @@ function tf_handle_contact_form() {
 
 	$to      = sanitize_email( tf_option( 'tf_contact_email' ) );
 	$to      = $to ? $to : get_option( 'admin_email' );
-	$subject = sprintf( '[thinkfurther.ai] Enquiry from %s', $name );
+	$host    = wp_parse_url( home_url(), PHP_URL_HOST );
+	$subject = sprintf( '[%s] Enquiry from %s', $host ? $host : get_bloginfo( 'name' ), $name );
 
 	$body  = "Name: {$name}\n";
 	$body .= "Email: {$email}\n";

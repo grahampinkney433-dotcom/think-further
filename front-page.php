@@ -46,7 +46,7 @@ get_header();
 		</h2>
 		<div class="manifesto__cols">
 			<p class="reveal"><?php esc_html_e( 'Inside the business, AI is collapsing the cost of work that used to take teams: analysis, drafting, triage, decisions. Outside it, buyers have stopped scrolling ten blue links — they ask an AI assistant and act on the answer.', 'thinkfurther' ); ?></p>
-			<p class="reveal"><?php esc_html_e( 'Think Further exists at the intersection. We make your business genuinely capable with AI, and we make sure that when AI answers questions in your market, you\'re the company it names.', 'thinkfurther' ); ?></p>
+			<p class="reveal"><?php esc_html_e( 'Alugence exists at the intersection. We make your business genuinely capable with AI, and we make sure that when AI answers questions in your market, you\'re the company it names.', 'thinkfurther' ); ?></p>
 		</div>
 	</div>
 </section>
@@ -250,7 +250,7 @@ if ( $tf_latest->have_posts() ) :
 			<div class="section-head section-head--split">
 				<div>
 					<?php tf_eyebrow( __( 'Insights', 'thinkfurther' ), 'reveal' ); ?>
-					<h2 class="section-head__title reveal"><?php esc_html_e( 'Thinking, further.', 'thinkfurther' ); ?></h2>
+					<h2 class="section-head__title reveal"><?php esc_html_e( 'Looking further.', 'thinkfurther' ); ?></h2>
 				</div>
 				<div class="reveal">
 					<?php tf_arrow_link( get_permalink( get_option( 'page_for_posts' ) ) ? get_permalink( get_option( 'page_for_posts' ) ) : home_url( '/blog/' ), __( 'All insights', 'thinkfurther' ) ); ?>

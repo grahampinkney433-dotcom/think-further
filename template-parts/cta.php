@@ -11,7 +11,7 @@
 			<div class="cta-band__glow" aria-hidden="true"></div>
 			<?php tf_eyebrow( __( 'Start the conversation', 'thinkfurther' ) ); ?>
 			<h2 class="cta-band__title">
-				<?php echo wp_kses( tf_headline( __( 'Find out what *thinking further* looks like for your business.', 'thinkfurther' ) ), array( 'em' => array() ) ); ?>
+				<?php echo wp_kses( tf_headline( __( 'Find out what *looking further* could do for your business.', 'thinkfurther' ) ), array( 'em' => array() ) ); ?>
 			</h2>
 			<p class="cta-band__desc"><?php esc_html_e( 'A 30-minute call. We\'ll tell you honestly where AI can move your numbers — and where it can\'t.', 'thinkfurther' ); ?></p>
 			<div class="cta-band__actions">

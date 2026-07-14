@@ -21,6 +21,16 @@ The repository root **is** the theme root (`style.css` lives at the top level), 
 
 Add engagements under **Case Studies** in wp-admin (client, sector and headline result live in the *Case Study Details* box). They appear at `/work/`, and the homepage automatically shows a "Selected work" section once at least one is published.
 
+## Business AI Capabilities Audit (`/ai-audit/`)
+
+An interactive readiness questionnaire (15 questions, 6 sections) that produces an AI Readiness Score out of 100 with per-section sub-scores, a band label (Emerging → Leading), and rules-based recommendations. Fully front-end — no backend involved in questions, scoring or results.
+
+**Editing content:** everything lives in the `CONFIG` block at the top of `assets/js/audit.js` — questions and answer options (`SECTIONS`), section weights, score `BANDS`, and `RECOMMENDATIONS` (per-section, tiered `low`/`mid`). The comments in that file explain each knob.
+
+**Connecting your email/CRM tool:** the optional "Email me my results" form calls a single function, `submitLead(lead)`, in `assets/js/audit.js`. It currently logs the payload and shows a success state. The doc block above it documents the exact payload shape and gives a drop-in `fetch()` example for a CRM webhook (HubSpot, Mailchimp, Zapier/Make, or a WP REST route calling `wp_mail()`). Replace that one function body and you're live.
+
+Progress is auto-saved to `sessionStorage`, so visitors can go back or reload without losing answers. The page is created automatically by Theme Setup.
+
 ## SEO & machine readability
 
 Built in (and automatically disabled if Yoast or Rank Math is active): meta descriptions, Open Graph/Twitter cards (using the post's featured image), ProfessionalService JSON-LD, FAQPage JSON-LD on the service pages, and a live-generated **`/llms.txt`** describing the firm, services, case studies and latest insights to AI crawlers. If `/llms.txt` 404s after deployment, run **Appearance → Theme Setup** once (it refreshes rewrite rules).

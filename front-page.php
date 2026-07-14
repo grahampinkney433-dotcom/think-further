@@ -195,6 +195,14 @@ get_header();
 				</div>
 			</dl>
 		</div>
+
+		<div class="audit-promo reveal">
+			<p class="audit-promo__text">
+				<span class="audit-promo__label"><?php esc_html_e( 'Free tool', 'thinkfurther' ); ?></span>
+				<?php esc_html_e( 'Benchmark your AI readiness in 3 minutes — score out of 100, no email required.', 'thinkfurther' ); ?>
+			</p>
+			<?php tf_arrow_link( tf_page_url_by_template( 'page-templates/audit.php', '/ai-audit/' ), __( 'Take the Capabilities Audit', 'thinkfurther' ) ); ?>
+		</div>
 	</div>
 </section>
 

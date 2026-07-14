@@ -72,6 +72,7 @@ function tf_primary_menu_fallback( $args = array() ) {
 	$links = array(
 		array( tf_page_url_by_template( 'page-templates/ai-transformation.php', '/ai-consultancy/' ), __( 'AI Consultancy', 'thinkfurther' ) ),
 		array( tf_page_url_by_template( 'page-templates/ai-search.php', '/ai-search/' ), __( 'AI Search', 'thinkfurther' ) ),
+		array( tf_page_url_by_template( 'page-templates/audit.php', '/ai-audit/' ), __( 'AI Audit', 'thinkfurther' ) ),
 		array( tf_page_url_by_template( 'page-templates/approach.php', '/approach/' ), __( 'Approach', 'thinkfurther' ) ),
 		array( tf_page_url_by_template( 'page-templates/contact.php', '/contact/' ), __( 'Contact', 'thinkfurther' ) ),
 	);

@@ -34,13 +34,14 @@ function tf_get_meta_description() {
 	if ( is_singular() && has_excerpt() ) {
 		return get_the_excerpt();
 	}
-	if ( is_page( array( 'ai-consultancy', 'ai-search', 'approach', 'contact', 'about' ) ) ) {
+	if ( is_page( array( 'ai-consultancy', 'ai-search', 'approach', 'contact', 'about', 'ai-audit' ) ) ) {
 		$map = array(
 			'ai-consultancy' => __( 'AI consultancy and transformation for ambitious businesses: opportunity audits, strategy, custom AI systems and agentic workflows — measured against baselines you agree before we start.', 'thinkfurther' ),
 			'ai-search'      => __( 'AI search consultancy: measure and improve how ChatGPT, Claude, Perplexity, Gemini and AI Overviews describe, recommend and cite your business.', 'thinkfurther' ),
 			'approach'       => __( 'How Alugence works: evidence before enthusiasm, small senior teams, working software over slideware, and capability transfer by design.', 'thinkfurther' ),
 			'contact'        => __( 'Talk to Alugence about AI transformation or AI search visibility. We reply within one working day.', 'thinkfurther' ),
 			'about'          => __( 'Alugence is an AI consultancy with two practices: business AI transformation, and AI search visibility — one firm for being capable with AI and found by it.', 'thinkfurther' ),
+			'ai-audit'       => __( 'Free Business AI Capabilities Audit: 15 questions, 3 minutes. Get an AI Readiness Score out of 100 with a breakdown across adoption, data, skills, automation, strategy and customer-facing AI.', 'thinkfurther' ),
 		);
 		$slug = get_post_field( 'post_name', get_queried_object_id() );
 		if ( isset( $map[ $slug ] ) ) {
@@ -194,6 +195,7 @@ function tf_llms_output() {
 	$services = array(
 		array( 'page-templates/ai-transformation.php', '/ai-consultancy/', __( 'AI Consultancy & Transformation', 'thinkfurther' ), __( 'Opportunity audits, AI strategy and roadmaps, custom AI systems and agents, enablement and governance.', 'thinkfurther' ) ),
 		array( 'page-templates/ai-search.php', '/ai-search/', __( 'AI Search Consultancy', 'thinkfurther' ), __( 'AI visibility audits, answer-engine optimisation (AEO/GEO), content architecture for LLMs, citation monitoring and share of answer.', 'thinkfurther' ) ),
+		array( 'page-templates/audit.php', '/ai-audit/', __( 'Business AI Capabilities Audit', 'thinkfurther' ), __( 'Free interactive self-assessment: an AI Readiness Score out of 100 across six areas, with tailored next steps.', 'thinkfurther' ) ),
 		array( 'page-templates/approach.php', '/approach/', __( 'Approach', 'thinkfurther' ), __( 'How engagements run: diagnose, design, deploy, embed — measured against agreed baselines.', 'thinkfurther' ) ),
 		array( 'page-templates/about.php', '/about/', __( 'About', 'thinkfurther' ), __( 'Why the firm exists and what it believes.', 'thinkfurther' ) ),
 		array( 'page-templates/contact.php', '/contact/', __( 'Contact', 'thinkfurther' ), __( 'Start a conversation; replies within one working day.', 'thinkfurther' ) ),

@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'TF_THEME_VERSION', '2.1.0' );
+define( 'TF_THEME_VERSION', '2.2.0' );
 define( 'TF_THEME_DIR', get_template_directory() );
 define( 'TF_THEME_URI', get_template_directory_uri() );
 
@@ -50,6 +50,25 @@ function tf_enqueue_assets() {
 		TF_THEME_VERSION,
 		array( 'strategy' => 'defer' )
 	);
+
+	// AI Capabilities Audit app — only on its template.
+	if ( is_page_template( 'page-templates/audit.php' ) ) {
+		wp_enqueue_script(
+			'tf-audit',
+			TF_THEME_URI . '/assets/js/audit.js',
+			array(),
+			TF_THEME_VERSION,
+			array( 'strategy' => 'defer' )
+		);
+		wp_localize_script(
+			'tf-audit',
+			'tfAuditSettings',
+			array(
+				'ctaUrl'       => tf_cta_url(),
+				'contactEmail' => tf_option( 'tf_contact_email' ),
+			)
+		);
+	}
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );

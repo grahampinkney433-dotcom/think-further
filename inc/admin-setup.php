@@ -168,8 +168,23 @@ function tf_run_setup() {
 		if ( '' === $rel ) {
 			return 0;
 		}
-		$existing = get_page_by_path( $rel );
+		$existing = get_page_by_path( $rel, OBJECT, 'page' );
+		if ( ! $existing ) {
+			// WP seeds some pages (e.g. Privacy Policy) as drafts.
+			$drafts = get_posts(
+				array(
+					'post_type'   => 'page',
+					'name'        => end( ( explode( '/', $rel ) ) ),
+					'post_status' => array( 'draft', 'pending' ),
+					'numberposts' => 1,
+				)
+			);
+			$existing = $drafts ? $drafts[0] : null;
+		}
 		if ( $existing ) {
+			if ( 'publish' !== $existing->post_status ) {
+				wp_update_post( array( 'ID' => $existing->ID, 'post_status' => 'publish' ) );
+			}
 			$created[ $path ] = $existing->ID;
 			return $existing->ID;
 		}

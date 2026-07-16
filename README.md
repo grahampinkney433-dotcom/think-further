@@ -31,6 +31,16 @@ An interactive readiness questionnaire (15 questions, 6 sections) that produces 
 
 Progress is auto-saved to `sessionStorage`, so visitors can go back or reload without losing answers. The page is created automatically by Theme Setup.
 
+## SEO & GEO architecture (workbook build)
+
+The site implements the "Alugence — SEO & GEO Requirements" workbook as a structural scaffold. The single source of truth is **`inc/seo-spec.php`**: every URL, H1, title tag (≤60), meta description (≤155), nav placement, schema type, sector use-case list and pricing tier lives there — edit that file, not templates. Body copy is clearly-labelled placeholder blocks (dashed indigo boxes) awaiting the content stage; copy pasted into a page's WP editor renders in each template's editor-content slot.
+
+- **Architecture (Tab 2)** — two-arm silos (`/ai-consultancy/` 18 children, `/ai-search/` 6), `/industries/` ×10, `/case-studies/`, `/guides/` + `/blog/` + `/glossary/` + `/tools/` under Resources, trust pages (About, Team, bios at `/about/team/{person}/`, Careers, Pricing, Contact), legal. **Appearance → Theme Setup** creates the entire tree, dropdown menu, `/blog/%postname%/` permalinks and draft guide/glossary seeds in one click.
+- **Schema (Tab 8)** — site-wide Organization (@id, areaServed GB/US, sameAs) + WebSite/SearchAction + BreadcrumbList; Service (+ItemList on pillars), FAQPage, AboutPage, ContactPage, OfferCatalog (pricing), WebApplication (tools), Article, DefinedTerm/DefinedTermSet, Person (bios).
+- **GEO layer (Tab 9)** — canonical entity paragraph (`tf_entity_paragraph()`) reused verbatim on Home/About/llms.txt; definition-first blocks; question-format H2s; expanded `/llms.txt`; robots.txt AI-crawler allow-list (GPTBot, PerplexityBot, ClaudeBot, Google-Extended, etc.).
+- **Tools** — `/tools/ai-roi-calculator/` implements Tab 16's exact calculation and readiness rubric with GBP/USD toggle; the gated report uses the documented `submitRoiLead()` hook in `assets/js/roi-calculator.js`.
+- **Pricing (Tab 17)** — tiers in `tf_spec_pricing()`; figures are the workbook's INDICATIVE benchmarks — replace before launch.
+
 ## SEO & machine readability
 
 Built in (and automatically disabled if Yoast or Rank Math is active): meta descriptions, Open Graph/Twitter cards (using the post's featured image), ProfessionalService JSON-LD, FAQPage JSON-LD on the service pages, and a live-generated **`/llms.txt`** describing the firm, services, case studies and latest insights to AI crawlers. If `/llms.txt` 404s after deployment, run **Appearance → Theme Setup** once (it refreshes rewrite rules).

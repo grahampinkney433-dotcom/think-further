@@ -38,6 +38,15 @@ function tf_register_case_studies() {
 			'menu_position' => 21,
 			'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
 			'show_in_rest' => true,
+			// Tab 6 CASE STUDY outline pre-filled in the editor.
+			'template'     => array(
+				array( 'core/heading', array( 'content' => 'The challenge' ) ),
+				array( 'core/paragraph', array( 'placeholder' => '[Context: client situation and the problem — Experience signal]' ) ),
+				array( 'core/heading', array( 'content' => 'Our approach' ) ),
+				array( 'core/paragraph', array( 'placeholder' => '[What we did, specifically — first-hand actions taken]' ) ),
+				array( 'core/heading', array( 'content' => 'The results' ) ),
+				array( 'core/paragraph', array( 'placeholder' => '[Metrics table or quantified outcomes — LLM-extractable]' ) ),
+			),
 		)
 	);
 }

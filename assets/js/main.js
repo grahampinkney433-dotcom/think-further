@@ -158,6 +158,25 @@
 	}
 
 	/* ------------------------------------------------------------
+	 * Pricing currency toggle (Tab 17 — shared GBP/USD switch)
+	 * ---------------------------------------------------------- */
+	var currencyButtons = document.querySelectorAll('[data-currency]');
+	if (currencyButtons.length) {
+		currencyButtons.forEach(function (btn) {
+			btn.addEventListener('click', function () {
+				var currency = btn.getAttribute('data-currency');
+				currencyButtons.forEach(function (b) {
+					var active = b === btn;
+					b.classList.toggle('is-active', active);
+					b.setAttribute('aria-pressed', active ? 'true' : 'false');
+				});
+				document.querySelectorAll('[data-price-gbp]').forEach(function (el) { el.hidden = currency !== 'gbp'; });
+				document.querySelectorAll('[data-price-usd]').forEach(function (el) { el.hidden = currency !== 'usd'; });
+			});
+		});
+	}
+
+	/* ------------------------------------------------------------
 	 * Reading progress bar (single posts)
 	 * ---------------------------------------------------------- */
 	var progressBar = document.querySelector('[data-progress-bar]');

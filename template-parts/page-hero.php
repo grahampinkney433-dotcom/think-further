@@ -18,6 +18,7 @@ $tf_subline = isset( $args['subline'] ) ? $args['subline'] : '';
 	<div class="page-hero__grid" aria-hidden="true"></div>
 	<div class="container">
 		<?php
+		get_template_part( 'template-parts/breadcrumbs' );
 		if ( $tf_eyebrow ) {
 			tf_eyebrow( $tf_eyebrow, 'reveal' );
 		}

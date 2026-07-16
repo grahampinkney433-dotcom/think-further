@@ -21,6 +21,10 @@ while ( have_posts() ) :
 					<?php tf_post_meta(); ?>
 					<span class="post-meta__sep" aria-hidden="true">·</span>
 					<span><?php echo esc_html( tf_reading_time() ); ?></span>
+				<span class="post-meta__sep" aria-hidden="true">·</span>
+				<span><?php esc_html_e( 'By', 'thinkfurther' ); ?> <?php the_author(); ?></span>
+				<span class="post-meta__sep" aria-hidden="true">·</span>
+				<span><?php esc_html_e( 'Updated', 'thinkfurther' ); ?> <?php echo esc_html( get_the_modified_date() ); ?></span>
 				</div>
 				<h1 class="page-hero__title page-hero__title--article reveal"><?php the_title(); ?></h1>
 				<?php if ( has_excerpt() ) : ?>

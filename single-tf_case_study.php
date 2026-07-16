@@ -52,6 +52,12 @@ while ( have_posts() ) :
 					<?php the_content(); ?>
 				</div>
 
+				<h2><?php esc_html_e( 'Services used', 'thinkfurther' ); ?></h2>
+				<div class="about-links">
+					<?php tf_arrow_link( home_url( '/ai-consultancy/' ), __( 'AI consultancy services', 'thinkfurther' ) ); ?>
+					<?php tf_arrow_link( home_url( '/ai-search/' ), __( 'AI search services', 'thinkfurther' ) ); ?>
+				</div>
+
 				<nav class="post-nav" aria-label="<?php esc_attr_e( 'Case study navigation', 'thinkfurther' ); ?>">
 					<div class="post-nav__prev"><?php previous_post_link( '%link', '&larr; %title' ); ?></div>
 					<div class="post-nav__next"><?php next_post_link( '%link', '%title &rarr;' ); ?></div>

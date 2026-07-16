@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'TF_THEME_VERSION', '2.2.0' );
+define( 'TF_THEME_VERSION', '3.0.0' );
 define( 'TF_THEME_DIR', get_template_directory() );
 define( 'TF_THEME_URI', get_template_directory_uri() );
 
@@ -19,6 +19,7 @@ require TF_THEME_DIR . '/inc/template-tags.php';
 require TF_THEME_DIR . '/inc/contact-form.php';
 require TF_THEME_DIR . '/inc/case-studies.php';
 require TF_THEME_DIR . '/inc/content-types.php';
+require TF_THEME_DIR . '/inc/seo-spec.php';
 require TF_THEME_DIR . '/inc/seo.php';
 
 if ( is_admin() ) {
@@ -51,6 +52,11 @@ function tf_enqueue_assets() {
 		TF_THEME_VERSION,
 		array( 'strategy' => 'defer' )
 	);
+
+	// AI ROI Calculator (Tab 16) — only on its template.
+	if ( is_page_template( 'page-templates/roi-calculator.php' ) ) {
+		wp_enqueue_script( 'tf-roi', TF_THEME_URI . '/assets/js/roi-calculator.js', array(), TF_THEME_VERSION, array( 'strategy' => 'defer' ) );
+	}
 
 	// AI Capabilities Audit app — only on its template.
 	if ( is_page_template( 'page-templates/audit.php' ) ) {

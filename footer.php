@@ -40,6 +40,18 @@
 				?>
 			</nav>
 
+			<nav class="site-footer__nav" aria-label="<?php esc_attr_e( 'Key services', 'thinkfurther' ); ?>">
+				<h2 class="site-footer__heading"><?php esc_html_e( 'Services', 'thinkfurther' ); ?></h2>
+				<ul class="site-footer__links">
+					<li><a href="<?php echo esc_url( home_url( '/ai-consultancy/ai-strategy/' ) ); ?>"><?php esc_html_e( 'AI strategy consulting', 'thinkfurther' ); ?></a></li>
+					<li><a href="<?php echo esc_url( home_url( '/ai-consultancy/ai-automation/' ) ); ?>"><?php esc_html_e( 'AI automation & agents', 'thinkfurther' ); ?></a></li>
+					<li><a href="<?php echo esc_url( home_url( '/ai-search/generative-engine-optimisation/' ) ); ?>"><?php esc_html_e( 'Generative engine optimisation', 'thinkfurther' ); ?></a></li>
+					<li><a href="<?php echo esc_url( home_url( '/ai-search/answer-engine-optimisation/' ) ); ?>"><?php esc_html_e( 'Answer engine optimisation', 'thinkfurther' ); ?></a></li>
+					<li><a href="<?php echo esc_url( home_url( '/ai-consultancy/london/' ) ); ?>"><?php esc_html_e( 'AI consultancy London', 'thinkfurther' ); ?></a></li>
+					<li><a href="<?php echo esc_url( home_url( '/ai-search/ai-seo-london/' ) ); ?>"><?php esc_html_e( 'AI SEO consultancy London', 'thinkfurther' ); ?></a></li>
+				</ul>
+			</nav>
+
 			<div class="site-footer__contact">
 				<h2 class="site-footer__heading"><?php esc_html_e( 'Contact', 'thinkfurther' ); ?></h2>
 				<ul class="site-footer__links">
@@ -55,6 +67,16 @@
 				<h2 class="site-footer__heading"><?php esc_html_e( 'Two disciplines, one firm', 'thinkfurther' ); ?></h2>
 				<p><?php esc_html_e( 'Business AI consultancy and transformation, and AI search visibility — because being capable with AI and being found by AI are now the same problem.', 'thinkfurther' ); ?></p>
 			</div>
+		</div>
+
+		<div class="site-footer__legal">
+			<ul class="site-footer__links site-footer__links--inline">
+				<li><a href="<?php echo esc_url( home_url( '/glossary/' ) ); ?>"><?php esc_html_e( 'Glossary', 'thinkfurther' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/careers/' ) ); ?>"><?php esc_html_e( 'Careers', 'thinkfurther' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/privacy-policy/' ) ); ?>"><?php esc_html_e( 'Privacy policy', 'thinkfurther' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/terms/' ) ); ?>"><?php esc_html_e( 'Terms & conditions', 'thinkfurther' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/cookie-policy/' ) ); ?>"><?php esc_html_e( 'Cookie policy', 'thinkfurther' ); ?></a></li>
+			</ul>
 		</div>
 
 		<div class="site-footer__bottom">

@@ -901,6 +901,12 @@ function tf_spec_for_path( $path = '' ) {
 	if ( ! $path ) {
 		if ( is_front_page() ) {
 			$path = '/';
+		} elseif ( is_post_type_archive() ) {
+			$url  = get_post_type_archive_link( get_query_var( 'post_type' ) );
+			$path = $url ? wp_parse_url( $url, PHP_URL_PATH ) : '';
+		} elseif ( is_home() && get_option( 'page_for_posts' ) ) {
+			$url  = get_permalink( get_option( 'page_for_posts' ) );
+			$path = $url ? wp_parse_url( $url, PHP_URL_PATH ) : '';
 		} else {
 			$url  = get_permalink( get_queried_object_id() );
 			$path = $url ? wp_parse_url( $url, PHP_URL_PATH ) : '';

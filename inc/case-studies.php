@@ -29,9 +29,9 @@ function tf_register_case_studies() {
 				'archives'           => __( 'Work', 'thinkfurther' ),
 			),
 			'public'       => true,
-			'has_archive'  => 'work',
+			'has_archive'  => 'case-studies',
 			'rewrite'      => array(
-				'slug'       => 'work',
+				'slug'       => 'case-studies',
 				'with_front' => false,
 			),
 			'menu_icon'    => 'dashicons-awards',

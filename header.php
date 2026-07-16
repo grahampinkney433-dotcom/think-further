@@ -31,7 +31,7 @@
 					'container'      => false,
 					'menu_class'     => 'site-nav__list',
 					'fallback_cb'    => 'tf_primary_menu_fallback',
-					'depth'          => 1,
+					'depth'          => 2,
 				)
 			);
 			?>

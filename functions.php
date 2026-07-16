@@ -18,6 +18,7 @@ require TF_THEME_DIR . '/inc/customizer.php';
 require TF_THEME_DIR . '/inc/template-tags.php';
 require TF_THEME_DIR . '/inc/contact-form.php';
 require TF_THEME_DIR . '/inc/case-studies.php';
+require TF_THEME_DIR . '/inc/content-types.php';
 require TF_THEME_DIR . '/inc/seo.php';
 
 if ( is_admin() ) {

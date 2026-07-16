@@ -39,6 +39,11 @@ function tf_customize_register( $wp_customize ) {
 		'tf_booking_url'    => array( __( 'Booking / calendar link (optional)', 'thinkfurther' ), '', 'esc_url_raw' ),
 		'tf_linkedin_url'   => array( __( 'LinkedIn URL', 'thinkfurther' ), '', 'esc_url_raw' ),
 		'tf_location_label' => array( __( 'Location label', 'thinkfurther' ), 'United Kingdom · Working worldwide', 'sanitize_text_field' ),
+		'tf_phone'          => array( __( 'Phone (trust/NAP + schema)', 'thinkfurther' ), '', 'sanitize_text_field' ),
+		'tf_address'        => array( __( 'Address / service area (NAP)', 'thinkfurther' ), 'Yorkshire, United Kingdom', 'sanitize_text_field' ),
+		'tf_company_number' => array( __( 'Company registration number', 'thinkfurther' ), '', 'sanitize_text_field' ),
+		'tf_founding_year'  => array( __( 'Founding year (Organization schema)', 'thinkfurther' ), '', 'sanitize_text_field' ),
+		'tf_sameas_urls'    => array( __( 'sameAs profile URLs (one per line: Crunchbase, X, Companies House…)', 'thinkfurther' ), '', 'sanitize_textarea_field' ),
 	);
 
 	foreach ( $contact_fields as $key => $field ) {
@@ -54,7 +59,7 @@ function tf_customize_register( $wp_customize ) {
 			array(
 				'label'   => $field[0],
 				'section' => 'tf_contact',
-				'type'    => 'text',
+				'type'    => 'tf_sameas_urls' === $key ? 'textarea' : 'text',
 			)
 		);
 	}
@@ -71,7 +76,7 @@ function tf_customize_register( $wp_customize ) {
 
 	$hero_fields = array(
 		'tf_hero_eyebrow'  => array( __( 'Eyebrow label', 'thinkfurther' ), 'AI consultancy — strategy to search' ),
-		'tf_hero_headline' => array( __( 'Headline (use *asterisks* for colour emphasis)', 'thinkfurther' ), 'Most companies adopt AI. The ones that win *look further.*' ),
+		'tf_hero_headline' => array( __( 'Headline (use *asterisks* for colour emphasis)', 'thinkfurther' ), 'AI consultancy and AI search optimisation for *ambitious businesses*' ),
 		'tf_hero_subline'  => array( __( 'Supporting line', 'thinkfurther' ), 'We help ambitious businesses turn AI from scattered experiments into a durable advantage — from operational transformation to how you\'re found and cited by AI search.' ),
 		'tf_hero_cta'      => array( __( 'Primary CTA label', 'thinkfurther' ), 'Book a strategy call' ),
 	);
@@ -134,8 +139,13 @@ function tf_option( $key ) {
 		'tf_booking_url'    => '',
 		'tf_linkedin_url'   => '',
 		'tf_location_label' => 'United Kingdom · Working worldwide',
+		'tf_phone'          => '',
+		'tf_address'        => 'Yorkshire, United Kingdom',
+		'tf_company_number' => '',
+		'tf_founding_year'  => '',
+		'tf_sameas_urls'    => '',
 		'tf_hero_eyebrow'   => 'AI consultancy — strategy to search',
-		'tf_hero_headline'  => 'Most companies adopt AI. The ones that win *look further.*',
+		'tf_hero_headline'  => 'AI consultancy and AI search optimisation for *ambitious businesses*',
 		'tf_hero_subline'   => 'We help ambitious businesses turn AI from scattered experiments into a durable advantage — from operational transformation to how you\'re found and cited by AI search.',
 		'tf_hero_cta'       => 'Book a strategy call',
 		'tf_footer_tagline' => 'An AI consultancy for businesses that intend to lead — not follow.',

@@ -69,23 +69,98 @@ add_action( 'after_setup_theme', 'tf_content_width', 0 );
 function tf_primary_menu_fallback( $args = array() ) {
 	$menu_class = ! empty( $args['menu_class'] ) ? $args['menu_class'] : 'site-nav__list';
 
-	$links = array(
-		array( tf_page_url_by_template( 'page-templates/ai-transformation.php', '/ai-consultancy/' ), __( 'AI Consultancy', 'thinkfurther' ) ),
-		array( tf_page_url_by_template( 'page-templates/ai-search.php', '/ai-search/' ), __( 'AI Search', 'thinkfurther' ) ),
-		array( tf_page_url_by_template( 'page-templates/audit.php', '/ai-audit/' ), __( 'AI Audit', 'thinkfurther' ) ),
-		array( tf_page_url_by_template( 'page-templates/approach.php', '/approach/' ), __( 'Approach', 'thinkfurther' ) ),
-		array( tf_page_url_by_template( 'page-templates/contact.php', '/contact/' ), __( 'Contact', 'thinkfurther' ) ),
-	);
+	// Footer variant: flat list of the primary destinations.
+	if ( 'site-footer__links' === $menu_class ) {
+		echo '<ul class="' . esc_attr( $menu_class ) . '">';
+		foreach ( tf_nav_structure() as $item ) {
+			printf( '<li class="menu-item"><a href="%s">%s</a></li>', esc_url( home_url( $item['path'] ) ), esc_html( $item['label'] ) );
+		}
+		echo '</ul>';
+		return;
+	}
 
+	// Header: two-level nav with dropdowns (Tab 7 global nav).
 	echo '<ul class="' . esc_attr( $menu_class ) . '">';
-	foreach ( $links as $link ) {
+	foreach ( tf_nav_structure() as $item ) {
+		$has_children = ! empty( $item['children'] );
 		printf(
-			'<li class="menu-item"><a href="%s">%s</a></li>',
-			esc_url( $link[0] ),
-			esc_html( $link[1] )
+			'<li class="menu-item%s"><a href="%s">%s</a>',
+			$has_children ? ' menu-item-has-children' : '',
+			esc_url( home_url( $item['path'] ) ),
+			esc_html( $item['label'] )
 		);
+		if ( $has_children ) {
+			echo '<ul class="sub-menu">';
+			foreach ( $item['children'] as $child_path => $child_label ) {
+				printf( '<li class="menu-item"><a href="%s">%s</a></li>', esc_url( home_url( $child_path ) ), esc_html( $child_label ) );
+			}
+			echo '</ul>';
+		}
+		echo '</li>';
 	}
 	echo '</ul>';
+}
+
+/**
+ * Global nav structure per Tab 7 + Tab 2 nav locations,
+ * derived from the SEO spec.
+ *
+ * @return array
+ */
+function tf_nav_structure() {
+	$dropdown = function ( $parent ) {
+		$out = array();
+		foreach ( tf_spec_children( $parent ) as $path => $rec ) {
+			if ( isset( $rec['nav'] ) && 'dropdown' === $rec['nav'] ) {
+				$out[ $path ] = $rec['h1'];
+			}
+		}
+		return $out;
+	};
+
+	return array(
+		array(
+			'label'    => __( 'AI Consultancy', 'thinkfurther' ),
+			'path'     => '/ai-consultancy/',
+			'children' => $dropdown( '/ai-consultancy/' ),
+		),
+		array(
+			'label'    => __( 'AI Search', 'thinkfurther' ),
+			'path'     => '/ai-search/',
+			'children' => $dropdown( '/ai-search/' ),
+		),
+		array(
+			'label'    => __( 'Industries', 'thinkfurther' ),
+			'path'     => '/industries/',
+			'children' => $dropdown( '/industries/' ),
+		),
+		array(
+			'label'    => __( 'Case Studies', 'thinkfurther' ),
+			'path'     => '/case-studies/',
+			'children' => array(),
+		),
+		array(
+			'label'    => __( 'Pricing', 'thinkfurther' ),
+			'path'     => '/pricing/',
+			'children' => array(),
+		),
+		array(
+			'label'    => __( 'Resources', 'thinkfurther' ),
+			'path'     => '/resources/',
+			'children' => array(
+				'/guides/'                 => __( 'Guides', 'thinkfurther' ),
+				'/blog/'                   => __( 'Blog', 'thinkfurther' ),
+				'/glossary/'               => __( 'Glossary', 'thinkfurther' ),
+				'/tools/'                  => __( 'Free tools', 'thinkfurther' ),
+				'/tools/ai-roi-calculator/' => __( 'AI ROI calculator', 'thinkfurther' ),
+			),
+		),
+		array(
+			'label'    => __( 'About', 'thinkfurther' ),
+			'path'     => '/about/',
+			'children' => array(),
+		),
+	);
 }
 
 /**

@@ -55,14 +55,14 @@ get_header();
 <section class="services section section--tight" id="services" aria-label="<?php esc_attr_e( 'Services', 'thinkfurther' ); ?>">
 	<div class="container">
 		<div class="section-head">
-			<?php tf_eyebrow( __( 'What we do', 'thinkfurther' ), 'reveal' ); ?>
-			<h2 class="section-head__title reveal"><?php echo wp_kses( tf_headline( __( 'One firm. Two ways we *compound* your advantage.', 'thinkfurther' ) ), array( 'em' => array() ) ); ?></h2>
+			<?php tf_eyebrow( __( 'Two arms, one brand', 'thinkfurther' ), 'reveal' ); ?>
+			<h2 class="section-head__title reveal"><?php echo wp_kses( tf_headline( __( 'What *we do*', 'thinkfurther' ) ), array( 'em' => array() ) ); ?></h2>
 		</div>
 
 		<div class="services__grid">
 			<article class="service-card service-card--primary reveal" data-tilt>
 				<p class="service-card__index" aria-hidden="true">01</p>
-				<h3 class="service-card__title"><?php esc_html_e( 'AI Consultancy & Transformation', 'thinkfurther' ); ?></h3>
+				<h3 class="service-card__title"><?php esc_html_e( 'AI consultancy & transformation', 'thinkfurther' ); ?></h3>
 				<p class="service-card__desc"><?php esc_html_e( 'Our core practice. We work with leadership teams to find where AI genuinely moves the numbers, then design, build and embed it — from opportunity mapping and strategy through custom AI systems, agentic workflows and team capability.', 'thinkfurther' ); ?></p>
 				<ul class="service-card__list">
 					<li><?php esc_html_e( 'AI opportunity audit & roadmap', 'thinkfurther' ); ?></li>
@@ -76,7 +76,7 @@ get_header();
 			<article class="service-card service-card--search reveal" data-tilt>
 				<p class="service-card__index" aria-hidden="true">02</p>
 				<p class="service-card__badge"><?php esc_html_e( 'Specialised practice', 'thinkfurther' ); ?></p>
-				<h3 class="service-card__title"><?php esc_html_e( 'AI Search Consultancy', 'thinkfurther' ); ?></h3>
+				<h3 class="service-card__title"><?php esc_html_e( 'AI search consultancy (GEO, AEO, AI SEO)', 'thinkfurther' ); ?></h3>
 				<p class="service-card__desc"><?php esc_html_e( 'A dedicated service line for the new front door of your market: ChatGPT, Claude, Perplexity, Gemini and AI Overviews. We measure how AI talks about you, then engineer your visibility, citations and share of answer.', 'thinkfurther' ); ?></p>
 				<ul class="service-card__list">
 					<li><?php esc_html_e( 'AI visibility audit & benchmarking', 'thinkfurther' ); ?></li>
@@ -110,7 +110,7 @@ get_header();
 	<div class="container">
 		<div class="section-head">
 			<?php tf_eyebrow( __( 'Why it works', 'thinkfurther' ), 'reveal' ); ?>
-			<h2 class="section-head__title reveal"><?php echo wp_kses( tf_headline( __( 'Built for outcomes, *not theatre.*', 'thinkfurther' ) ), array( 'em' => array() ) ); ?></h2>
+			<h2 class="section-head__title reveal"><?php echo wp_kses( tf_headline( __( 'Why *Alugence*', 'thinkfurther' ) ), array( 'em' => array() ) ); ?></h2>
 		</div>
 
 		<div class="capabilities__grid">
@@ -222,7 +222,7 @@ if ( $tf_cases->have_posts() ) :
 			<div class="section-head section-head--split">
 				<div>
 					<?php tf_eyebrow( __( 'Selected work', 'thinkfurther' ), 'reveal' ); ?>
-					<h2 class="section-head__title reveal"><?php echo wp_kses( tf_headline( __( 'Measured, *not claimed.*', 'thinkfurther' ) ), array( 'em' => array() ) ); ?></h2>
+					<h2 class="section-head__title reveal"><?php echo wp_kses( tf_headline( __( 'Our *results*', 'thinkfurther' ) ), array( 'em' => array() ) ); ?></h2>
 				</div>
 				<div class="reveal">
 					<?php tf_arrow_link( get_post_type_archive_link( 'tf_case_study' ), __( 'All case studies', 'thinkfurther' ) ); ?>
@@ -277,6 +277,31 @@ if ( $tf_latest->have_posts() ) :
 		</div>
 	</section>
 <?php endif; ?>
+
+<!-- ============ TRUSTED BY ============ -->
+<section class="section section--tight" aria-label="<?php esc_attr_e( 'Trust signals', 'thinkfurther' ); ?>">
+	<div class="container">
+		<div class="section-head">
+			<h2 class="section-head__title"><?php esc_html_e( 'Trusted by', 'thinkfurther' ); ?></h2>
+		</div>
+		<?php tf_placeholder( 'Client logos & reviews', 'Client logos, named testimonials with role & company, and a review widget (Trustpilot/Google) — only genuine items (Tab 10).', 0 ); ?>
+	</div>
+</section>
+
+<!-- ============ HOME FAQ (FAQPage schema) ============ -->
+<?php
+$tf_home_ph = '[PLACEHOLDER — 40-60 word answer-first response, written at content stage.]';
+tf_faq_section(
+	__( 'Frequently asked questions', 'thinkfurther' ),
+	__( 'The two questions *everyone asks.*', 'thinkfurther' ),
+	array(
+		array( __( 'What is AI consultancy?', 'thinkfurther' ), $tf_home_ph ),
+		array( __( 'What is AI search optimisation?', 'thinkfurther' ), $tf_home_ph ),
+		array( __( 'How do your two practices work together?', 'thinkfurther' ), $tf_home_ph ),
+		array( __( 'Do you work with UK and US businesses?', 'thinkfurther' ), $tf_home_ph ),
+	)
+);
+?>
 
 <?php get_template_part( 'template-parts/cta' ); ?>
 

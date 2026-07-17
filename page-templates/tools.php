@@ -13,7 +13,7 @@ $tf_spec  = tf_spec_for_path();
 $tf_tools = array(
 	array( home_url( '/tools/ai-roi-calculator/' ), __( 'AI ROI Calculator', 'thinkfurther' ), __( 'Estimate hours saved, annual cost savings and your AI readiness score in two minutes. Instant on-screen results.', 'thinkfurther' ), true ),
 	array( tf_page_url_by_template( 'page-templates/audit.php', '/ai-audit/' ), __( 'AI Capabilities Audit', 'thinkfurther' ), __( '15 questions across six areas. Get an AI readiness score out of 100 with tailored next steps — no email gate.', 'thinkfurther' ), true ),
-	array( '', __( 'AI Visibility Checker', 'thinkfurther' ), __( 'Check how visible your brand is across ChatGPT, Gemini and Perplexity. Coming in phase 2.', 'thinkfurther' ), false ),
+	array( tf_page_url_by_template( 'page-templates/visibility-checker.php', '/tools/ai-visibility-checker/' ), __( 'Brand AI Visibility Checker', 'thinkfurther' ), __( 'See how often ChatGPT, Claude, Gemini and Perplexity name, cite and recommend your brand — with an AI Visibility Score out of 100.', 'thinkfurther' ), true ),
 );
 ?>
 <section class="page-hero theme-dark">

@@ -21,6 +21,7 @@ require TF_THEME_DIR . '/inc/case-studies.php';
 require TF_THEME_DIR . '/inc/content-types.php';
 require TF_THEME_DIR . '/inc/seo-spec.php';
 require TF_THEME_DIR . '/inc/seo.php';
+require TF_THEME_DIR . '/inc/visibility-checker.php';
 
 if ( is_admin() ) {
 	require TF_THEME_DIR . '/inc/admin-setup.php';
@@ -56,6 +57,18 @@ function tf_enqueue_assets() {
 	// AI ROI Calculator (Tab 16) — only on its template.
 	if ( is_page_template( 'page-templates/roi-calculator.php' ) ) {
 		wp_enqueue_script( 'tf-roi', TF_THEME_URI . '/assets/js/roi-calculator.js', array(), TF_THEME_VERSION, array( 'strategy' => 'defer' ) );
+	}
+
+	// Brand AI Visibility Checker — only on its template.
+	if ( is_page_template( 'page-templates/visibility-checker.php' ) ) {
+		wp_enqueue_script(
+			'tf-visibility',
+			TF_THEME_URI . '/assets/js/visibility-checker.js',
+			array(),
+			TF_THEME_VERSION,
+			array( 'strategy' => 'defer' )
+		);
+		wp_localize_script( 'tf-visibility', 'tfVisibilitySettings', tf_vis_frontend_settings() );
 	}
 
 	// AI Capabilities Audit app — only on its template.

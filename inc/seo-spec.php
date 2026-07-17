@@ -652,6 +652,18 @@ function tf_spec_pages() {
 			'priority' => 'P1',
 			'schema'   => 'WebApplication',
 		),
+		'/tools/ai-visibility-checker/' => array(
+			'h1'       => 'Brand AI Visibility Checker',
+			'title'    => 'Brand AI Visibility Checker | Alugence',
+			'meta'     => 'Free Brand AI Visibility Checker: see how often ChatGPT, Claude, Gemini and Perplexity name, cite and recommend your brand — with an AI Visibility Score out of 100.',
+			'kw'       => 'ai visibility checker, ai brand visibility, share of voice ai, ai citations, brand mentions in ai',
+			'template' => 'visibility-checker',
+			'arm'      => 'A2',
+			'parent'   => '/tools/',
+			'nav'      => 'hub',
+			'priority' => 'P1',
+			'schema'   => 'WebApplication',
+		),
 
 		/* ---------------- Legal (Tab 2) ---------------- */
 

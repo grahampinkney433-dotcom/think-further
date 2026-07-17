@@ -31,6 +31,28 @@ An interactive readiness questionnaire (15 questions, 6 sections) that produces 
 
 Progress is auto-saved to `sessionStorage`, so visitors can go back or reload without losing answers. The page is created automatically by Theme Setup.
 
+## Brand AI Visibility Checker (`/tools/ai-visibility-checker/`)
+
+Checks how visible a brand is across AI assistants and AI search. A visitor enters their brand (plus an optional website and up to four competitors) and gets a dashboard: an overall **AI Visibility Score /100**, then breakdown cards for **citations**, **mentions**, **share of voice** vs competitors, **sentiment**, and the **sources** AI systems pull from — each with a plain-English explanation of what it means and why it matters. Ends with a "Book a call" lead-capture CTA.
+
+It is built in two clearly separated layers:
+
+- **Front end** (`assets/js/visibility-checker.js`) — input form, animated loading state and the results dashboard, all styled to the brand (Beam / AI-search arm). It only renders what the backend returns; it never calls an LLM directly.
+- **Backend service** (`inc/visibility-checker.php`) — a real WordPress REST route (`POST /wp-json/tf/v1/visibility-check`) that queries the AI sources, aggregates the six signals, enforces cost controls, and logs each check. Each source is abstracted behind its own function (`tf_vis_source_openai`, `tf_vis_source_anthropic`, `tf_vis_source_gemini`, `tf_vis_source_perplexity`) and registered in `tf_vis_sources()`, so sources are added/removed in one place (also filterable via `tf_vis_sources`).
+
+**Supplying API keys** (never committed): define any of these as environment variables **or** PHP constants in `wp-config.php` — a source with no key is skipped automatically:
+
+```
+TF_VIS_OPENAI_KEY      (or env OPENAI_API_KEY)
+TF_VIS_ANTHROPIC_KEY   (or env ANTHROPIC_API_KEY)
+TF_VIS_GEMINI_KEY      (or env GEMINI_API_KEY / GOOGLE_API_KEY)
+TF_VIS_PERPLEXITY_KEY  (or env PERPLEXITY_API_KEY)
+```
+
+Optional model overrides: `TF_VIS_OPENAI_MODEL` (`gpt-4o-mini`), `TF_VIS_ANTHROPIC_MODEL` (`claude-opus-4-8`), `TF_VIS_GEMINI_MODEL` (`gemini-1.5-flash`), `TF_VIS_PERPLEXITY_MODEL` (`sonar`). **If no keys are configured, the tool falls back to clearly-labelled SAMPLE data** (the dashboard shows a "Sample data" banner) so it stays demonstrable — the real-call code path is fully built, not stubbed.
+
+**Cost controls (enforced server-side, before any spend):** a per-visitor **daily cap** (by IP + first-party session cookie), configurable via `TF_VIS_CHECKS_PER_DAY` (default `3`); a **required, validated email** before a check runs (curbs bot/throwaway abuse, not just lead capture); and a honeypot field. Every check is logged (timestamp, brand, email, score, sample flag) to the `tf_vis_log` option and mirrored to the PHP error log — review it under **Tools → AI Visibility Log**, which also tallies live (paid) vs sample checks. The page is created automatically by Theme Setup.
+
 ## SEO & GEO architecture (workbook build)
 
 The site implements the "Alugence — SEO & GEO Requirements" workbook as a structural scaffold. The single source of truth is **`inc/seo-spec.php`**: every URL, H1, title tag (≤60), meta description (≤155), nav placement, schema type, sector use-case list and pricing tier lives there — edit that file, not templates. Body copy is clearly-labelled placeholder blocks (dashed indigo boxes) awaiting the content stage; copy pasted into a page's WP editor renders in each template's editor-content slot.
@@ -38,7 +60,7 @@ The site implements the "Alugence — SEO & GEO Requirements" workbook as a stru
 - **Architecture (Tab 2)** — two-arm silos (`/ai-consultancy/` 18 children, `/ai-search/` 6), `/industries/` ×10, `/case-studies/`, `/guides/` + `/blog/` + `/glossary/` + `/tools/` under Resources, trust pages (About, Team, bios at `/about/team/{person}/`, Careers, Pricing, Contact), legal. **Appearance → Theme Setup** creates the entire tree, dropdown menu, `/blog/%postname%/` permalinks and draft guide/glossary seeds in one click.
 - **Schema (Tab 8)** — site-wide Organization (@id, areaServed GB/US, sameAs) + WebSite/SearchAction + BreadcrumbList; Service (+ItemList on pillars), FAQPage, AboutPage, ContactPage, OfferCatalog (pricing), WebApplication (tools), Article, DefinedTerm/DefinedTermSet, Person (bios).
 - **GEO layer (Tab 9)** — canonical entity paragraph (`tf_entity_paragraph()`) reused verbatim on Home/About/llms.txt; definition-first blocks; question-format H2s; expanded `/llms.txt`; robots.txt AI-crawler allow-list (GPTBot, PerplexityBot, ClaudeBot, Google-Extended, etc.).
-- **Tools** — `/tools/ai-roi-calculator/` implements Tab 16's exact calculation and readiness rubric with GBP/USD toggle; the gated report uses the documented `submitRoiLead()` hook in `assets/js/roi-calculator.js`.
+- **Tools** — `/tools/ai-roi-calculator/` implements Tab 16's exact calculation and readiness rubric with GBP/USD toggle; the gated report uses the documented `submitRoiLead()` hook in `assets/js/roi-calculator.js`. `/tools/ai-visibility-checker/` is the Brand AI Visibility Checker (see its section above) — REST-backed, with real per-source LLM calls, cost controls and usage logging.
 - **Pricing (Tab 17)** — tiers in `tf_spec_pricing()`; figures are the workbook's INDICATIVE benchmarks — replace before launch.
 
 ## SEO & machine readability
@@ -61,6 +83,9 @@ template-parts/        Page hero, CTA band, post + case study cards
 archive/single-tf_case_study.php   /work/ case study templates
 assets/css/main.css    Full design system (design tokens at the top)
 assets/js/main.js      Canvas hero, scroll reveals, counters, nav — no dependencies
+inc/visibility-checker.php  Brand AI Visibility Checker backend: REST route,
+                       per-source LLM callers, cost caps, usage log
+assets/js/visibility-checker.js  Visibility Checker front end (form + dashboard)
 ```
 
 ## Brand system (v1.0)

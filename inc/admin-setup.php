@@ -45,6 +45,8 @@ function tf_setup_template_file( $key, $path ) {
 			return 'page-templates/tools.php';
 		case 'roi-calculator':
 			return 'page-templates/roi-calculator.php';
+		case 'visibility-checker':
+			return 'page-templates/visibility-checker.php';
 		case 'careers':
 			return 'page-templates/careers.php';
 		default:

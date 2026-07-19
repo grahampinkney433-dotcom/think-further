@@ -3090,6 +3090,23 @@ figcaption {
 	padding-left: 1.25rem;
 }
 
+/* In-page "On this page" jump nav inside a guide/blog body. */
+.on-this-page {
+	margin: 1.5rem 0 2rem;
+	padding: 1rem 1.25rem;
+	border: 1px solid var(--mist);
+	border-radius: var(--radius, 8px);
+	font-size: var(--text-sm);
+	line-height: 1.9;
+	color: var(--ink-muted, var(--paper-text));
+}
+
+/* Trailing cross-links under a glossary term's "why it matters". */
+.glossary-related {
+	font-size: var(--text-sm);
+	color: var(--ink-muted, var(--paper-text));
+}
+
 .glossary-list {
 	margin: 0;
 }

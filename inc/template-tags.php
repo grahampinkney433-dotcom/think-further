@@ -118,7 +118,7 @@ function tf_faq_section( $eyebrow, $title, $faqs ) {
 		return;
 	}
 	?>
-	<section class="section faq-section" aria-label="<?php echo esc_attr( $eyebrow ); ?>">
+	<section id="faqs" class="section faq-section" aria-label="<?php echo esc_attr( $eyebrow ); ?>">
 		<div class="container">
 			<div class="split">
 				<div class="split__lead">

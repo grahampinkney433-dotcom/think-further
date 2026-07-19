@@ -400,8 +400,8 @@ function tf_spec_pages() {
 		),
 		'/industries/' => array(
 			'h1'       => 'Industries: AI built for your sector',
-			'title'    => 'AI by Industry: Sector Expertise | Alugence',
-			'meta'     => 'AI consulting by industry: financial services, healthcare, legal, retail, manufacturing and more. Sector-specific AI use cases and delivery.',
+			'title'    => 'AI Solutions by Industry | Alugence',
+			'meta'     => 'AI consulting tailored to your sector — financial services, healthcare, legal, retail, manufacturing and more. See sector-specific use cases.',
 			'kw'       => 'ai by industry, sector ai, vertical ai',
 			'template' => 'industries-index',
 			'arm'      => 'Shared',
@@ -544,8 +544,8 @@ function tf_spec_pages() {
 		),
 		'/about/team/' => array(
 			'h1'       => 'Our team: named consultants, real credentials',
-			'title'    => 'Meet the Team | AI Consultants | Alugence',
-			'meta'     => 'The consultants behind Alugence: named experts in AI strategy, automation, GEO and AEO — with the credentials and delivery record to match.',
+			'title'    => 'Meet the Team | Alugence AI Consultants',
+			'meta'     => 'Meet the named consultants behind Alugence — AI strategy, engineering and AI search experts helping UK & US businesses adopt and win with AI.',
 			'kw'       => 'ai consultants, ai search consultants',
 			'template' => 'team',
 			'arm'      => 'Shared',
@@ -600,7 +600,7 @@ function tf_spec_pages() {
 		'/guides/' => array(
 			'h1'       => 'Guides: definitive answers on AI and AI search',
 			'title'    => 'AI & AI Search Guides | Alugence',
-			'meta'     => 'Definitive guides to GEO, AEO, agentic AI and AI transformation. Definition-first, expert-written and built to answer your exact question.',
+			'meta'     => 'In-depth guides on GEO, AEO, AI search visibility, agentic AI and AI transformation. Learn the fundamentals and how to apply them.',
 			'kw'       => 'geo guide, aeo guide, agentic ai guide',
 			'template' => 'cpt-archive',
 			'arm'      => 'Shared',
@@ -611,7 +611,7 @@ function tf_spec_pages() {
 		'/blog/' => array(
 			'h1'       => 'Blog: AI and AI search insights',
 			'title'    => 'AI & AI Search Blog | Alugence',
-			'meta'     => 'Practical articles on AI adoption, automation, GEO, AEO and AI search visibility — comparisons, tool round-ups and how-tos for operators.',
+			'meta'     => 'Practical articles on AI adoption, automation, AI search visibility and the best GEO/AEO tools. Insights for UK & US business leaders.',
 			'kw'       => 'ai blog, geo blog, aeo insights',
 			'template' => 'blog-index',
 			'arm'      => 'Shared',
@@ -622,7 +622,7 @@ function tf_spec_pages() {
 		'/glossary/' => array(
 			'h1'       => 'Glossary: AI and AI search terms defined',
 			'title'    => 'AI & AI Search Glossary | Alugence',
-			'meta'     => 'Plain-English definitions of AI and AI search terms: GEO, AEO, agentic AI, AI search visibility and more. One crisp definition per term.',
+			'meta'     => 'Plain-English definitions of AI and AI search terms — GEO, AEO, AI search visibility, agentic AI, LLMs and more. One clear definition each.',
 			'kw'       => 'geo definition, aeo definition, ai glossary',
 			'template' => 'cpt-archive',
 			'arm'      => 'Shared',
@@ -632,8 +632,8 @@ function tf_spec_pages() {
 		),
 		'/tools/' => array(
 			'h1'       => 'Free tools: measure your AI opportunity',
-			'title'    => 'Free AI Tools & Calculators | Alugence',
-			'meta'     => 'Free interactive tools from Alugence: AI ROI calculator, AI readiness audit and AI visibility checker. Instant results, no email required.',
+			'title'    => 'Free AI Tools | Alugence',
+			'meta'     => 'Free tools from Alugence: estimate your AI ROI and readiness, and check your brand\'s visibility across ChatGPT, Gemini and Perplexity.',
 			'kw'       => 'ai roi calculator, ai readiness audit, ai visibility checker',
 			'template' => 'tools',
 			'arm'      => 'Shared',
@@ -643,7 +643,7 @@ function tf_spec_pages() {
 		'/tools/ai-roi-calculator/' => array(
 			'h1'       => 'AI ROI calculator and opportunity report',
 			'title'    => 'AI ROI Calculator | Estimate AI Savings | Alugence',
-			'meta'     => 'Free AI ROI calculator: estimate hours saved, annual cost savings and your AI readiness score in two minutes. Instant results, no email needed.',
+			'meta'     => 'Free AI ROI calculator. Estimate the hours and money AI could save your business, plus your AI readiness score. Get a branded AI Opportunity Report.',
 			'kw'       => 'ai savings calculator, ai cost calculator, ai roi',
 			'template' => 'roi-calculator',
 			'arm'      => 'A1',

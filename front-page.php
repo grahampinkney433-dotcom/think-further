@@ -290,16 +290,20 @@ if ( $tf_latest->have_posts() ) :
 
 <!-- ============ HOME FAQ (FAQPage schema) ============ -->
 <?php
-$tf_home_ph = '[PLACEHOLDER — 40-60 word answer-first response, written at content stage.]';
-tf_faq_section(
-	__( 'Frequently asked questions', 'thinkfurther' ),
-	__( 'The two questions *everyone asks.*', 'thinkfurther' ),
-	array(
+$tf_home_ph   = '[PLACEHOLDER — 40-60 word answer-first response, written at content stage.]';
+$tf_home_faqs = function_exists( 'tf_content_faqs' ) ? tf_content_faqs( '/' ) : array();
+if ( ! $tf_home_faqs ) {
+	$tf_home_faqs = array(
 		array( __( 'What is AI consultancy?', 'thinkfurther' ), $tf_home_ph ),
 		array( __( 'What is AI search optimisation?', 'thinkfurther' ), $tf_home_ph ),
 		array( __( 'How do your two practices work together?', 'thinkfurther' ), $tf_home_ph ),
 		array( __( 'Do you work with UK and US businesses?', 'thinkfurther' ), $tf_home_ph ),
-	)
+	);
+}
+tf_faq_section(
+	__( 'Frequently asked questions', 'thinkfurther' ),
+	__( 'The two questions *everyone asks.*', 'thinkfurther' ),
+	$tf_home_faqs
 );
 ?>
 

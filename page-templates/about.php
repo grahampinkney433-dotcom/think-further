@@ -27,7 +27,7 @@ $tf_spec = tf_spec_for_path();
 	<div class="container container--prose">
 		<h2><?php esc_html_e( 'Who we are', 'thinkfurther' ); ?></h2>
 		<p class="guide-quick-answer"><?php echo esc_html( tf_entity_paragraph() ); ?></p>
-		<?php tf_placeholder( 'Founding story & mission', 'Founding year, mission and what makes the firm different — consistent with the entity paragraph above.', 150 ); ?>
+		<?php $tf_kses = function_exists( 'tf_content_kses' ) ? tf_content_kses() : array(); $tf_who = tf_c_section( 'who we are' ); if ( $tf_who ) { echo wp_kses( $tf_who, $tf_kses ); } else { tf_placeholder( 'Founding story & mission', 'Founding year, mission and what makes the firm different — consistent with the entity paragraph above.', 150 ); } ?>
 	</div>
 </section>
 

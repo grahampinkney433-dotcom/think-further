@@ -14,6 +14,7 @@ if ( ! $tf_spec ) {
 $tf_path     = trailingslashit( wp_parse_url( get_permalink( get_queried_object_id() ), PHP_URL_PATH ) );
 $tf_children = tf_spec_children( $tf_path );
 $tf_is_a2    = 'A2' === $tf_spec['arm'];
+$tf_kses     = function_exists( 'tf_content_kses' ) ? tf_content_kses() : array();
 ?>
 
 <section class="page-hero theme-dark">
@@ -22,7 +23,7 @@ $tf_is_a2    = 'A2' === $tf_spec['arm'];
 		<?php get_template_part( 'template-parts/breadcrumbs' ); ?>
 		<?php tf_eyebrow( $tf_is_a2 ? __( 'Arm 2 — specialised practice', 'thinkfurther' ) : __( 'Arm 1 — core practice', 'thinkfurther' ), 'reveal' ); ?>
 		<h1 class="page-hero__title reveal"><?php echo esc_html( $tf_spec['h1'] ); ?></h1>
-		<p class="page-hero__subline reveal"><?php echo esc_html( $tf_spec['meta'] ); ?></p>
+		<div class="page-hero__subline reveal"><?php echo tf_c( 'intro' ) ? wp_kses( tf_c( 'intro' ), $tf_kses ) : '<p>' . esc_html( $tf_spec['meta'] ) . '</p>'; ?></div>
 		<div class="hero__actions reveal">
 			<a class="btn btn--volt btn--lg" href="<?php echo esc_url( tf_cta_url() ); ?>"><?php esc_html_e( 'Book a discovery call', 'thinkfurther' ); ?> <span aria-hidden="true">&rarr;</span></a>
 			<a class="btn btn--ghost btn--lg" href="<?php echo esc_url( home_url( '/pricing/' ) ); ?>"><?php esc_html_e( 'See pricing', 'thinkfurther' ); ?></a>
@@ -33,7 +34,7 @@ $tf_is_a2    = 'A2' === $tf_spec['arm'];
 <section class="section section--tight" aria-label="<?php esc_attr_e( 'Definition', 'thinkfurther' ); ?>">
 	<div class="container container--prose">
 		<h2><?php echo $tf_is_a2 ? esc_html__( 'What is AI search optimisation?', 'thinkfurther' ) : esc_html__( 'What is AI consultancy?', 'thinkfurther' ); ?></h2>
-		<?php tf_placeholder( 'Answer-first definition', 'Direct 2–3 sentence definition in the first 100 words. Quotable and self-contained (AI Overview + LLM extraction target).', 60 ); ?>
+		<?php if ( tf_c( 'def' ) ) { echo '<div class="guide-quick-answer">' . wp_kses( tf_c( 'def' ), $tf_kses ) . '</div>'; } else { tf_placeholder( 'Answer-first definition', 'Direct 2–3 sentence definition in the first 100 words. Quotable and self-contained (AI Overview + LLM extraction target).', 60 ); } ?>
 	</div>
 </section>
 
@@ -65,7 +66,7 @@ $tf_is_a2    = 'A2' === $tf_spec['arm'];
 				<h2 class="section-head__title"><?php esc_html_e( 'How we work', 'thinkfurther' ); ?></h2>
 			</div>
 			<div class="split__body">
-				<?php tf_placeholder( 'Engagement model', 'How engagements run for this arm: entry points, typical phases, and how pricing tiers map to them. Link Readiness Sprint / Visibility Audit.', 140 ); ?>
+				<?php $tf_hww = tf_c_section( 'how we work' ); if ( $tf_hww ) { echo wp_kses( $tf_hww, $tf_kses ); } else { tf_placeholder( 'Engagement model', 'How engagements run for this arm: entry points, typical phases, and how pricing tiers map to them. Link Readiness Sprint / Visibility Audit.', 140 ); } ?>
 			</div>
 		</div>
 	</div>

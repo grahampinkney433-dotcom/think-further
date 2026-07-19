@@ -79,6 +79,12 @@ while ( have_posts() ) :
 	</article>
 
 	<?php
+	// FAQ accordion + FAQPage schema when the article defines FAQs.
+	$tf_faqs = get_post_meta( get_the_ID(), '_tf_faqs', true );
+	if ( ! empty( $tf_faqs ) && is_array( $tf_faqs ) ) {
+		tf_faq_section( __( 'FAQs', 'thinkfurther' ), __( 'Related questions, *answered directly.*', 'thinkfurther' ), $tf_faqs );
+	}
+
 	$tf_related_args = array(
 		'posts_per_page'      => 3,
 		'post__not_in'        => array( get_the_ID() ),

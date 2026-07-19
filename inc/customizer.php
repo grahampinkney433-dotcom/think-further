@@ -77,8 +77,8 @@ function tf_customize_register( $wp_customize ) {
 	$hero_fields = array(
 		'tf_hero_eyebrow'  => array( __( 'Eyebrow label', 'thinkfurther' ), 'AI consultancy — strategy to search' ),
 		'tf_hero_headline' => array( __( 'Headline (use *asterisks* for colour emphasis)', 'thinkfurther' ), 'AI consultancy and AI search optimisation for *ambitious businesses*' ),
-		'tf_hero_subline'  => array( __( 'Supporting line', 'thinkfurther' ), 'We help ambitious businesses turn AI from scattered experiments into a durable advantage — from operational transformation to how you\'re found and cited by AI search.' ),
-		'tf_hero_cta'      => array( __( 'Primary CTA label', 'thinkfurther' ), 'Book a strategy call' ),
+		'tf_hero_subline'  => array( __( 'Supporting line', 'thinkfurther' ), 'Alugence is an AI consultancy with two practices under one trusted brand: we help you adopt AI to run your business better, and we help you get found by AI when customers search ChatGPT, Gemini, Perplexity and Google AI Overviews.' ),
+		'tf_hero_cta'      => array( __( 'Primary CTA label', 'thinkfurther' ), 'Book a discovery call' ),
 	);
 
 	foreach ( $hero_fields as $key => $field ) {
@@ -146,8 +146,8 @@ function tf_option( $key ) {
 		'tf_sameas_urls'    => '',
 		'tf_hero_eyebrow'   => 'AI consultancy — strategy to search',
 		'tf_hero_headline'  => 'AI consultancy and AI search optimisation for *ambitious businesses*',
-		'tf_hero_subline'   => 'We help ambitious businesses turn AI from scattered experiments into a durable advantage — from operational transformation to how you\'re found and cited by AI search.',
-		'tf_hero_cta'       => 'Book a strategy call',
+		'tf_hero_subline'   => 'Alugence is an AI consultancy with two practices under one trusted brand: we help you adopt AI to run your business better, and we help you get found by AI when customers search ChatGPT, Gemini, Perplexity and Google AI Overviews.',
+		'tf_hero_cta'       => 'Book a discovery call',
 		'tf_footer_tagline' => 'An AI consultancy for businesses that intend to lead — not follow.',
 	);
 

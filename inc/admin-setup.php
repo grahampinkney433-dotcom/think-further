@@ -253,42 +253,8 @@ function tf_run_setup() {
 		update_option( 'page_for_posts', $blog_id );
 	}
 
-	/* ---- 3. Content seeds (drafts for the content stage) ---- */
-	foreach ( tf_spec_guides() as $slug => $guide ) {
-		if ( get_page_by_path( $slug, OBJECT, 'tf_guide' ) ) {
-			continue;
-		}
-		$gid = wp_insert_post(
-			array(
-				'post_title'  => $guide['h1'],
-				'post_name'   => $slug,
-				'post_type'   => 'tf_guide',
-				'post_status' => 'draft',
-			)
-		);
-		if ( $gid && ! is_wp_error( $gid ) ) {
-			update_post_meta( $gid, '_tf_title_tag', $guide['title'] );
-			update_post_meta( $gid, '_tf_meta_desc', $guide['meta'] );
-			update_post_meta( $gid, '_tf_money_url', $guide['money'] );
-			update_post_meta( $gid, '_tf_money_anchor', $guide['money_anchor'] );
-		}
-	}
-	foreach ( tf_spec_glossary() as $slug => $term ) {
-		if ( get_page_by_path( $slug, OBJECT, 'tf_glossary' ) ) {
-			continue;
-		}
-		$tid = wp_insert_post(
-			array(
-				'post_title'  => $term['term'],
-				'post_name'   => $slug,
-				'post_type'   => 'tf_glossary',
-				'post_status' => 'draft',
-			)
-		);
-		if ( $tid && ! is_wp_error( $tid ) && $term['guide'] ) {
-			update_post_meta( $tid, '_tf_guide_url', $term['guide'] );
-		}
-	}
+	/* ---- 3. Content seeds — real final copy, published ---- */
+	tf_seed_longform();
 
 	/* ---- 4. Menu (two-level, from spec nav structure) ---- */
 	$locations = get_nav_menu_locations();
@@ -339,6 +305,88 @@ function tf_run_setup() {
 	exit;
 }
 add_action( 'admin_post_tf_run_setup', 'tf_run_setup' );
+
+/**
+ * Seed pillar guides (tf_guide), blog articles (post) and glossary terms
+ * (tf_glossary) with the final copy from inc/seo-longform.php. Idempotent:
+ * matches on slug + post type and updates in place, so re-running Theme
+ * Setup re-imports the canonical copy without creating duplicates.
+ *
+ * Meta keys mirror the SEO engine's lookups: _tf_title_tag (title tag),
+ * _tf_meta_desc (meta description), _tf_faqs (FAQPage pairs), plus
+ * _tf_money_url / _tf_money_anchor for guide internal-link CTAs and
+ * _tf_guide_url for a glossary term's "read the full guide" link.
+ */
+function tf_seed_longform() {
+	if ( ! function_exists( 'tf_longform_posts' ) ) {
+		return;
+	}
+
+	// Guide → money-link map (subset of guides have a matched service CTA).
+	$guide_money = array();
+	if ( function_exists( 'tf_spec_guides' ) ) {
+		foreach ( tf_spec_guides() as $g_slug => $g ) {
+			$guide_money[ $g_slug ] = array( $g['money'], $g['money_anchor'] );
+		}
+	}
+
+	foreach ( tf_longform_posts() as $rec ) {
+		$existing = get_page_by_path( $rec['slug'], OBJECT, $rec['cpt'] );
+		$postarr  = array(
+			'post_title'   => $rec['title'],
+			'post_name'    => $rec['slug'],
+			'post_type'    => $rec['cpt'],
+			'post_status'  => 'publish',
+			'post_content' => $rec['html'],
+			'post_excerpt' => $rec['excerpt'],
+		);
+		if ( $existing ) {
+			$postarr['ID'] = $existing->ID;
+			$pid           = wp_update_post( $postarr );
+		} else {
+			$pid = wp_insert_post( $postarr );
+		}
+		if ( ! $pid || is_wp_error( $pid ) ) {
+			continue;
+		}
+		update_post_meta( $pid, '_tf_title_tag', $rec['meta_title'] );
+		update_post_meta( $pid, '_tf_meta_desc', $rec['meta_desc'] );
+		update_post_meta( $pid, '_tf_faqs', $rec['faqs'] );
+		if ( 'tf_guide' === $rec['cpt'] && isset( $guide_money[ $rec['slug'] ] ) ) {
+			update_post_meta( $pid, '_tf_money_url', $guide_money[ $rec['slug'] ][0] );
+			update_post_meta( $pid, '_tf_money_anchor', $guide_money[ $rec['slug'] ][1] );
+		}
+	}
+
+	if ( ! function_exists( 'tf_longform_glossary' ) ) {
+		return;
+	}
+	foreach ( tf_longform_glossary() as $rec ) {
+		$existing = get_page_by_path( $rec['slug'], OBJECT, 'tf_glossary' );
+		$postarr  = array(
+			'post_title'   => $rec['term'],
+			'post_name'    => $rec['slug'],
+			'post_type'    => 'tf_glossary',
+			'post_status'  => 'publish',
+			'post_content' => $rec['html'],
+			'post_excerpt' => $rec['definition'],
+		);
+		if ( $existing ) {
+			$postarr['ID'] = $existing->ID;
+			$pid           = wp_update_post( $postarr );
+		} else {
+			$pid = wp_insert_post( $postarr );
+		}
+		if ( ! $pid || is_wp_error( $pid ) ) {
+			continue;
+		}
+		update_post_meta( $pid, '_tf_title_tag', $rec['meta_title'] );
+		update_post_meta( $pid, '_tf_meta_desc', $rec['meta_desc'] );
+		if ( ! empty( $rec['guide_url'] ) ) {
+			update_post_meta( $pid, '_tf_guide_url', $rec['guide_url'] );
+		}
+	}
+}
 
 /**
  * Nudge towards setup on fresh installs (only while unconfigured).

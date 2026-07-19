@@ -23,7 +23,7 @@ $tf_pricing = tf_spec_pricing();
 		<?php get_template_part( 'template-parts/breadcrumbs' ); ?>
 		<?php tf_eyebrow( __( 'Pricing', 'thinkfurther' ), 'reveal' ); ?>
 		<h1 class="page-hero__title reveal"><?php echo esc_html( $tf_spec ? $tf_spec['h1'] : get_the_title() ); ?></h1>
-		<p class="page-hero__subline reveal"><?php echo esc_html( $tf_spec ? $tf_spec['meta'] : '' ); ?></p>
+		<div class="page-hero__subline reveal"><?php $tf_kses = function_exists( 'tf_content_kses' ) ? tf_content_kses() : array(); echo tf_c( 'intro' ) ? wp_kses( tf_c( 'intro' ), $tf_kses ) : '<p>' . esc_html( $tf_spec ? $tf_spec['meta'] : '' ) . '</p>'; ?></div>
 		<div class="pricing-toggle reveal" role="group" aria-label="<?php esc_attr_e( 'Currency', 'thinkfurther' ); ?>">
 			<button type="button" class="pricing-toggle__btn is-active" data-currency="gbp" aria-pressed="true">GBP &pound;</button>
 			<button type="button" class="pricing-toggle__btn" data-currency="usd" aria-pressed="false">USD $</button>
@@ -68,7 +68,7 @@ $tf_pricing = tf_spec_pricing();
 		<div class="section-head">
 			<h2 class="section-head__title"><?php esc_html_e( 'How we scope and what is included', 'thinkfurther' ); ?></h2>
 		</div>
-		<?php tf_placeholder( 'Scoping explanation', 'How scoping works, what affects price, no-hidden-fees commitment, GDPR line, and links to case studies showing outcomes for the price (Tab 17 trust rules).', 130 ); ?>
+		<?php $tf_scope = tf_c_section( 'how we scope' ); if ( $tf_scope ) { echo wp_kses( $tf_scope, tf_content_kses() ); } else { tf_placeholder( 'Scoping explanation', 'How scoping works, what affects price, no-hidden-fees commitment, GDPR line, and links to case studies showing outcomes for the price (Tab 17 trust rules).', 130 ); } ?>
 		<div class="table-scroll">
 			<table class="pricing-table">
 				<caption class="screen-reader-text"><?php esc_html_e( 'Engagement tiers compared', 'thinkfurther' ); ?></caption>
@@ -109,19 +109,23 @@ while ( have_posts() ) :
 	endif;
 endwhile;
 
-// FAQ per Tab 17 (real questions, placeholder answers for content stage).
-$tf_ph = '[PLACEHOLDER — 40–60 word answer-first response, written at content stage.]';
-tf_faq_section(
-	__( 'FAQs', 'thinkfurther' ),
-	__( 'Pricing questions, *answered directly.*', 'thinkfurther' ),
-	array(
+// FAQ per Tab 17 — real answers from the content layer, placeholder fallback.
+$tf_ph        = '[PLACEHOLDER — 40–60 word answer-first response, written at content stage.]';
+$tf_price_faqs = function_exists( 'tf_content_faqs' ) ? tf_content_faqs() : array();
+if ( ! $tf_price_faqs ) {
+	$tf_price_faqs = array(
 		array( __( 'How much does AI consulting cost?', 'thinkfurther' ), $tf_ph ),
 		array( __( 'What is included in each tier?', 'thinkfurther' ), $tf_ph ),
 		array( __( 'Do you offer fixed fees?', 'thinkfurther' ), $tf_ph ),
 		array( __( 'What is the typical payback window?', 'thinkfurther' ), $tf_ph ),
 		array( __( 'Are prices ex-VAT?', 'thinkfurther' ), $tf_ph ),
 		array( __( 'Do you work with US clients?', 'thinkfurther' ), $tf_ph ),
-	)
+	);
+}
+tf_faq_section(
+	__( 'FAQs', 'thinkfurther' ),
+	__( 'Pricing questions, *answered directly.*', 'thinkfurther' ),
+	$tf_price_faqs
 );
 
 get_template_part( 'template-parts/cta' );

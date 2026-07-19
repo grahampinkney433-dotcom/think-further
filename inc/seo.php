@@ -39,7 +39,7 @@ function tf_document_title() {
 	if ( $spec && ! empty( $spec['title'] ) ) {
 		return $spec['title'];
 	}
-	if ( is_singular( array( 'tf_guide', 'tf_glossary' ) ) ) {
+	if ( is_singular( array( 'tf_guide', 'tf_glossary', 'post' ) ) ) {
 		$custom = get_post_meta( get_the_ID(), '_tf_title_tag', true );
 		if ( $custom ) {
 			return $custom;
@@ -73,7 +73,7 @@ function tf_get_meta_description() {
 	if ( $spec && ! empty( $spec['meta'] ) ) {
 		return $spec['meta'];
 	}
-	if ( is_singular( array( 'tf_guide', 'tf_glossary' ) ) ) {
+	if ( is_singular( array( 'tf_guide', 'tf_glossary', 'post' ) ) ) {
 		$custom = get_post_meta( get_the_ID(), '_tf_meta_desc', true );
 		if ( $custom ) {
 			return $custom;
@@ -513,7 +513,9 @@ function tf_structured_data() {
 				'@context'          => 'https://schema.org',
 				'@type'             => 'DefinedTerm',
 				'name'              => wp_strip_all_tags( get_the_title() ),
-				'description'       => wp_strip_all_tags( tf_get_meta_description() ? tf_get_meta_description() : get_the_excerpt() ),
+				// Full one-sentence definition (excerpt); the meta tag may be
+				// length-truncated, but structured data carries the whole thing.
+				'description'       => wp_strip_all_tags( has_excerpt() ? get_the_excerpt() : tf_get_meta_description() ),
 				'url'               => get_permalink(),
 				'inDefinedTermSet'  => array(
 					'@type' => 'DefinedTermSet',
@@ -602,6 +604,18 @@ function tf_author_bio_page( $user_id ) {
  * @return array [ [q, a], ... ]
  */
 function tf_spec_faqs( $spec ) {
+	// Prefer real FAQ copy from the content layer (feeds both the visible
+	// accordion and FAQPage schema) when it exists for this page.
+	if ( function_exists( 'tf_content' ) ) {
+		$content = tf_content();
+		if ( $content && ! empty( $content['faqs'] ) ) {
+			$out = array();
+			foreach ( $content['faqs'] as $faq ) {
+				$out[] = array( $faq[0], $faq[1] );
+			}
+			return $out;
+		}
+	}
 	$name = strtolower( wp_strip_all_tags( $spec['h1'] ) );
 	$ph   = '[PLACEHOLDER — 40–60 word answer-first response, written at content stage from real People Also Ask questions.]';
 	return array(

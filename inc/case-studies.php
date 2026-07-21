@@ -36,7 +36,7 @@ function tf_register_case_studies() {
 			),
 			'menu_icon'    => 'dashicons-awards',
 			'menu_position' => 21,
-			'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail' ),
+			'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail', 'custom-fields' ),
 			'show_in_rest' => true,
 			// Tab 6 CASE STUDY outline pre-filled in the editor.
 			'template'     => array(

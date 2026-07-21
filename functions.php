@@ -23,6 +23,7 @@ require TF_THEME_DIR . '/inc/seo-spec.php';
 require TF_THEME_DIR . '/inc/seo-content.php';
 require TF_THEME_DIR . '/inc/seo-longform.php';
 require TF_THEME_DIR . '/inc/seo.php';
+require TF_THEME_DIR . '/inc/rest-meta.php';
 
 if ( is_admin() ) {
 	require TF_THEME_DIR . '/inc/admin-setup.php';

@@ -1,0 +1,3 @@
+# Never commit real credentials or generated review notes.
+config.ini
+notes/

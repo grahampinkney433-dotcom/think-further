@@ -32,7 +32,7 @@ function tf_register_content_types() {
 			),
 			'menu_icon'     => 'dashicons-welcome-learn-more',
 			'menu_position' => 22,
-			'supports'      => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions' ),
+			'supports'      => array( 'title', 'editor', 'excerpt', 'thumbnail', 'author', 'revisions', 'custom-fields' ),
 			'show_in_rest'  => true,
 		)
 	);
@@ -55,7 +55,7 @@ function tf_register_content_types() {
 			),
 			'menu_icon'     => 'dashicons-book-alt',
 			'menu_position' => 23,
-			'supports'      => array( 'title', 'editor', 'excerpt', 'revisions' ),
+			'supports'      => array( 'title', 'editor', 'excerpt', 'revisions', 'custom-fields' ),
 			'show_in_rest'  => true,
 		)
 	);

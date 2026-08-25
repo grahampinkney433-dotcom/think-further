@@ -469,7 +469,7 @@ function tf_structured_data() {
 	}
 
 	// Free tool: WebApplication (Tab 8/16).
-	if ( 'roi-calculator' === $tpl || is_page_template( 'page-templates/audit.php' ) ) {
+	if ( 'roi-calculator' === $tpl || 'ai-visibility-checker' === $tpl || is_page_template( 'page-templates/audit.php' ) ) {
 		tf_jsonld(
 			array(
 				'@context'            => 'https://schema.org',

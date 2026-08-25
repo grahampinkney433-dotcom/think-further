@@ -45,6 +45,8 @@ function tf_setup_template_file( $key, $path ) {
 			return 'page-templates/tools.php';
 		case 'roi-calculator':
 			return 'page-templates/roi-calculator.php';
+		case 'ai-visibility-checker':
+			return 'page-templates/ai-visibility-checker.php';
 		case 'careers':
 			return 'page-templates/careers.php';
 		default:
@@ -255,6 +257,11 @@ function tf_run_setup() {
 
 	/* ---- 3. Content seeds — real final copy, published ---- */
 	tf_seed_longform();
+
+	// Usage-log table for the AI Visibility Checker.
+	if ( function_exists( 'tf_avc_maybe_create_table' ) ) {
+		tf_avc_maybe_create_table();
+	}
 
 	/* ---- 4. Menu (two-level, from spec nav structure) ---- */
 	$locations = get_nav_menu_locations();

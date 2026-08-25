@@ -24,6 +24,7 @@ require TF_THEME_DIR . '/inc/seo-content.php';
 require TF_THEME_DIR . '/inc/seo-longform.php';
 require TF_THEME_DIR . '/inc/seo.php';
 require TF_THEME_DIR . '/inc/rest-meta.php';
+require TF_THEME_DIR . '/inc/ai-visibility-checker.php';
 
 if ( is_admin() ) {
 	require TF_THEME_DIR . '/inc/admin-setup.php';
@@ -76,6 +77,28 @@ function tf_enqueue_assets() {
 			array(
 				'ctaUrl'       => tf_cta_url(),
 				'contactEmail' => tf_option( 'tf_contact_email' ),
+			)
+		);
+	}
+
+	// Brand AI Visibility Checker — only on its template.
+	if ( is_page_template( 'page-templates/ai-visibility-checker.php' ) ) {
+		wp_enqueue_script(
+			'tf-avc',
+			TF_THEME_URI . '/assets/js/ai-visibility-checker.js',
+			array(),
+			TF_THEME_VERSION,
+			array( 'strategy' => 'defer' )
+		);
+		wp_localize_script(
+			'tf-avc',
+			'tfAvcSettings',
+			array(
+				'restUrl'        => esc_url_raw( rest_url( 'alugence/v1/visibility-check' ) ),
+				'nonce'          => wp_create_nonce( 'wp_rest' ),
+				'ctaUrl'         => tf_cta_url(),
+				'dailyLimit'     => (int) ( defined( 'TF_AVC_DAILY_LIMIT' ) ? TF_AVC_DAILY_LIMIT : 3 ),
+				'maxCompetitors' => (int) ( defined( 'TF_AVC_MAX_COMPETITORS' ) ? TF_AVC_MAX_COMPETITORS : 5 ),
 			)
 		);
 	}

@@ -45,6 +45,21 @@ if ( ! defined( 'TF_AVC_HTTP_TIMEOUT' ) ) {
 	define( 'TF_AVC_HTTP_TIMEOUT', 25 );    // seconds per upstream API call
 }
 
+/* Potential AI-search revenue model (all overridable in wp-config.php).
+ * Estimate = visitors × 12 × ai-search share × visibility gap × conversion × value. */
+if ( ! defined( 'TF_AVC_AI_SEARCH_SHARE' ) ) {
+	define( 'TF_AVC_AI_SEARCH_SHARE', 0.15 ); // share of discovery journeys AI search now touches
+}
+if ( ! defined( 'TF_AVC_CONV_RATE' ) ) {
+	define( 'TF_AVC_CONV_RATE', 0.02 );       // visitor → customer conversion
+}
+if ( ! defined( 'TF_AVC_DEFAULT_VISITORS' ) ) {
+	define( 'TF_AVC_DEFAULT_VISITORS', 5000 ); // assumed monthly visitors when not supplied
+}
+if ( ! defined( 'TF_AVC_DEFAULT_VALUE' ) ) {
+	define( 'TF_AVC_DEFAULT_VALUE', 500 );     // assumed avg customer value (GBP) when not supplied
+}
+
 /* ---------------------------------------------------------------------------
  * Source registry — add/remove an AI source here.
  * Each 'fn' returns a normalised result via tf_avc_normalise().
@@ -70,6 +85,11 @@ function tf_avc_sources() {
 			'label' => 'Google Gemini',
 			'fn'    => 'tf_avc_query_gemini',
 			'env'   => 'GOOGLE_API_KEY',
+		),
+		'google_aio' => array(
+			'label' => 'Google AI Overviews',
+			'fn'    => 'tf_avc_query_google_aio',
+			'env'   => 'SERPAPI_API_KEY',
 		),
 	);
 }
@@ -179,7 +199,11 @@ function tf_avc_handle_check( WP_REST_Request $request ) {
 		$results[ $key ] = tf_avc_normalise( $key, $src['label'], $out );
 	}
 
-	$report = tf_avc_aggregate( $brand, $url, $competitors, $results );
+	// Optional business inputs for the revenue estimate.
+	$monthly_visitors = (int) $request->get_param( 'monthly_visitors' );
+	$avg_value        = (float) $request->get_param( 'avg_value' );
+
+	$report = tf_avc_aggregate( $brand, $url, $competitors, $results, $monthly_visitors, $avg_value );
 
 	// Log for usage / cost review.
 	tf_avc_log_check( $email, $brand, $ip, $report );
@@ -317,6 +341,90 @@ function tf_avc_query_gemini( $brand, $url, $competitors, $api_key ) {
 }
 
 /**
+ * Google AI Overviews — the AI answer shown in Google Search results.
+ * Google has no first-party API for this, so we read it through a SERP
+ * provider (SerpApi) that exposes the `ai_overview` block and its reference
+ * links. Set SERPAPI_API_KEY. Swap the provider by editing this one function.
+ */
+function tf_avc_query_google_aio( $brand, $url, $competitors, $api_key ) {
+	$base = 'https://serpapi.com/search.json?engine=google&hl=en&gl=us&q=' . rawurlencode( $brand ) . '&api_key=' . rawurlencode( $api_key );
+	$resp = tf_avc_http_get( $base );
+	if ( is_wp_error( $resp ) ) {
+		return array( 'error' => $resp->get_error_message() );
+	}
+	$ov = isset( $resp['ai_overview'] ) ? $resp['ai_overview'] : array();
+
+	// Some responses defer the overview behind a page_token; fetch it.
+	if ( empty( $ov['text_blocks'] ) && ! empty( $ov['page_token'] ) ) {
+		$resp2 = tf_avc_http_get( 'https://serpapi.com/search.json?engine=google_ai_overview&page_token=' . rawurlencode( $ov['page_token'] ) . '&api_key=' . rawurlencode( $api_key ) );
+		if ( ! is_wp_error( $resp2 ) && ! empty( $resp2['ai_overview'] ) ) {
+			$ov = $resp2['ai_overview'];
+		}
+	}
+
+	if ( empty( $ov ) ) {
+		// No AI Overview shown for this query — a real, informative result.
+		return array( 'text' => '', 'citations' => array() );
+	}
+
+	$text = '';
+	if ( ! empty( $ov['text_blocks'] ) && is_array( $ov['text_blocks'] ) ) {
+		$text = tf_avc_flatten_text_blocks( $ov['text_blocks'] );
+	}
+	$citations = array();
+	if ( ! empty( $ov['references'] ) && is_array( $ov['references'] ) ) {
+		foreach ( $ov['references'] as $ref ) {
+			if ( ! empty( $ref['link'] ) ) {
+				$citations[] = $ref['link'];
+			}
+		}
+	}
+	$citations = array_values( array_unique( array_merge( $citations, tf_avc_extract_urls( $text ) ) ) );
+	return array( 'text' => $text, 'citations' => $citations );
+}
+
+/** Flatten SerpApi ai_overview text_blocks (paragraphs + lists) to plain text. */
+function tf_avc_flatten_text_blocks( $blocks ) {
+	$out = '';
+	foreach ( $blocks as $b ) {
+		if ( isset( $b['snippet'] ) ) {
+			$out .= $b['snippet'] . ' ';
+		}
+		if ( ! empty( $b['list'] ) && is_array( $b['list'] ) ) {
+			foreach ( $b['list'] as $li ) {
+				if ( isset( $li['snippet'] ) ) {
+					$out .= $li['snippet'] . ' ';
+				}
+			}
+		}
+	}
+	return trim( $out );
+}
+
+/**
+ * Shared JSON GET helper (wp_remote_get). Returns decoded body or WP_Error.
+ */
+function tf_avc_http_get( $endpoint ) {
+	$response = wp_remote_get(
+		$endpoint,
+		array(
+			'timeout' => TF_AVC_HTTP_TIMEOUT,
+			'headers' => array( 'Accept' => 'application/json' ),
+		)
+	);
+	if ( is_wp_error( $response ) ) {
+		return $response;
+	}
+	$code = wp_remote_retrieve_response_code( $response );
+	$body = json_decode( wp_remote_retrieve_body( $response ), true );
+	if ( $code < 200 || $code >= 300 ) {
+		$msg = isset( $body['error'] ) ? ( is_string( $body['error'] ) ? $body['error'] : wp_json_encode( $body['error'] ) ) : ( 'HTTP ' . $code );
+		return new WP_Error( 'tf_avc_http', $msg );
+	}
+	return is_array( $body ) ? $body : array();
+}
+
+/**
  * Shared JSON POST helper (wp_remote_post). Returns decoded body or WP_Error.
  *
  * @param string $endpoint URL.
@@ -451,7 +559,7 @@ function tf_avc_sample_source( $key, $label, $brand, $competitors ) {
 /* ===========================================================================
  * Aggregation → dashboard payload
  * ========================================================================= */
-function tf_avc_aggregate( $brand, $url, $competitors, $results ) {
+function tf_avc_aggregate( $brand, $url, $competitors, $results, $monthly_visitors = 0, $avg_value = 0 ) {
 	$total_sources = count( $results );
 	$mention_count = 0;
 	$cite_count    = 0;
@@ -557,6 +665,7 @@ function tf_avc_aggregate( $brand, $url, $competitors, $results ) {
 		'all_sample'    => $any_sample && ! $any_real,
 		'score'         => $score,
 		'score_band'    => tf_avc_score_band( $score ),
+		'revenue'       => tf_avc_revenue_estimate( $score, $monthly_visitors, $avg_value ),
 		'metrics'       => array(
 			'citations'      => array(
 				'value'     => count( $sources_cited ),
@@ -626,6 +735,67 @@ function tf_avc_rank_sources( $urls ) {
 		}
 	}
 	return $out;
+}
+
+/**
+ * Modelled "potential AI-search revenue" — the annual revenue currently going
+ * uncaptured because AI systems don't surface the brand well. Deliberately a
+ * transparent, assumption-driven estimate (not a promise):
+ *
+ *   annual = monthly_visitors × 12 × ai_search_share × visibility_gap
+ *            × conversion_rate × avg_customer_value
+ *
+ * Uses the visitor/value figures the user supplied, or clearly-flagged
+ * defaults. Returned as a low–high range around the midpoint.
+ *
+ * @param int   $score            AI visibility score (0–100).
+ * @param int   $monthly_visitors Supplied monthly visitors (0 = use default).
+ * @param float $avg_value        Supplied avg customer value (0 = use default).
+ * @return array
+ */
+function tf_avc_revenue_estimate( $score, $monthly_visitors, $avg_value ) {
+	$using_defaults = ( $monthly_visitors <= 0 ) || ( $avg_value <= 0 );
+	$visitors = $monthly_visitors > 0 ? (int) $monthly_visitors : (int) TF_AVC_DEFAULT_VISITORS;
+	$value    = $avg_value > 0 ? (float) $avg_value : (float) TF_AVC_DEFAULT_VALUE;
+
+	$gap = ( 100 - max( 0, min( 100, $score ) ) ) / 100; // share of AI visibility currently missed
+	$mid = $visitors * 12 * (float) TF_AVC_AI_SEARCH_SHARE * $gap * (float) TF_AVC_CONV_RATE * $value;
+
+	// Round the midpoint to a readable figure, then band ±40%.
+	$mid  = tf_avc_round_money( $mid );
+	$low  = tf_avc_round_money( $mid * 0.6 );
+	$high = tf_avc_round_money( $mid * 1.4 );
+
+	return array(
+		'currency'       => 'GBP',
+		'symbol'         => '£',
+		'low'            => $low,
+		'mid'            => $mid,
+		'high'           => $high,
+		'using_defaults' => $using_defaults,
+		'assumptions'    => array(
+			'monthly_visitors' => $visitors,
+			'avg_value'        => $value,
+			'ai_search_share'  => (float) TF_AVC_AI_SEARCH_SHARE,
+			'conversion_rate'  => (float) TF_AVC_CONV_RATE,
+		),
+		'explainer'      => __( 'A modelled estimate of the annual revenue AI search could add if your brand were fully visible — based on your visitors and customer value (or typical defaults), the share of journeys AI search now touches, and how much visibility you\'re currently missing. It\'s a directional figure to size the opportunity, not a guarantee.', 'thinkfurther' ),
+	);
+}
+
+/** Round a money figure to a readable step (nearest 100 / 1k / 10k by size). */
+function tf_avc_round_money( $n ) {
+	$n = max( 0, (float) $n );
+	if ( $n >= 100000 ) {
+		return (int) ( round( $n / 5000 ) * 5000 );
+	}
+	if ( $n >= 10000 ) {
+		return (int) ( round( $n / 1000 ) * 1000 );
+	}
+	if ( $n >= 1000 ) {
+		return (int) ( round( $n / 100 ) * 100 );
+	}
+	return (int) ( round( $n / 50 ) * 50 );
 }
 
 /** Score → band label + plain-English blurb. */
@@ -715,13 +885,15 @@ function tf_avc_log_check( $email, $brand, $ip, $report ) {
 	global $wpdb;
 	$table   = tf_avc_log_table();
 	$summary = sprintf(
-		'score=%d; mentions=%d/%d; citations=%d; sov=%d%%; sentiment=%s; sample=%s',
+		'score=%d; mentions=%d/%d; citations=%d; sov=%d%%; sentiment=%s; rev_mid=%s%d; sample=%s',
 		$report['score'],
 		$report['metrics']['mentions']['value'],
 		$report['metrics']['mentions']['of'],
 		$report['metrics']['citations']['value'],
 		$report['metrics']['share_of_voice']['value'],
 		$report['metrics']['sentiment']['value'],
+		$report['revenue']['symbol'],
+		$report['revenue']['mid'],
 		$report['is_sample'] ? 'yes' : 'no'
 	);
 	$wpdb->insert( // phpcs:ignore WordPress.DB.DirectDatabaseQuery

@@ -23,7 +23,7 @@ get_template_part(
 	array(
 		'eyebrow' => __( 'Free tool', 'thinkfurther' ),
 		'title'   => __( 'Brand *AI Visibility Checker.*', 'thinkfurther' ),
-		'subline' => __( 'See how visible your brand is across ChatGPT, Claude, Perplexity and Gemini — citations, mentions, share of voice, sentiment and the sources AI pulls from, with an overall AI Visibility Score out of 100.', 'thinkfurther' ),
+		'subline' => __( 'See how visible your brand is across ChatGPT, Claude, Perplexity, Gemini and Google AI Overviews — citations, mentions, share of voice, sentiment, the sources AI pulls from and the revenue AI search could add, with an overall AI Visibility Score out of 100.', 'thinkfurther' ),
 	)
 );
 ?>

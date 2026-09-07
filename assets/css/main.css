@@ -3573,10 +3573,33 @@ figcaption {
 .avc-cta .avc-eyebrow { color: var(--signal); }
 .avc-cta .btn--ghost { color: var(--ink-text); border-color: var(--ink-line); }
 
+/* ---- Potential AI-search revenue ---- */
+.avc-revenue {
+	background: linear-gradient(135deg, rgba(41, 211, 194, 0.12), rgba(43, 52, 224, 0.06));
+	border: 1px solid rgba(41, 211, 194, 0.4);
+	border-radius: var(--radius-lg);
+	padding: 1.75rem 2rem;
+}
+.avc-revenue .avc-eyebrow { color: var(--beam-ink); }
+.avc-revenue__range {
+	font-family: var(--font-display);
+	font-size: clamp(2rem, 1.4rem + 2.8vw, 3rem);
+	font-weight: 700;
+	line-height: 1.05;
+	color: var(--paper-text);
+	margin: 0.1rem 0 0.35rem;
+}
+.avc-revenue__dash { color: var(--beam-ink); margin: 0 0.35rem; }
+.avc-revenue__sub { font-size: var(--text-md); color: var(--paper-muted); margin: 0; }
+.avc-revenue__foot { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(41, 211, 194, 0.3); }
+.avc-revenue__assume { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--paper-muted); margin: 0 0 0.5rem; }
+.avc-revenue__foot .avc-card__explain { border-top: 0; padding-top: 0; margin-top: 0; }
+
 /* ---- Responsive ---- */
 @media (max-width: 680px) {
 	.avc-form__grid { grid-template-columns: 1fr; }
 	.avc-metrics { grid-template-columns: 1fr; }
+	.avc-revenue { padding: 1.5rem; }
 	.avc-scorecard { flex-direction: column; text-align: center; padding: 1.5rem; }
 	.avc-scorecard__blurb { margin-inline: auto; }
 	.avc-sov__row { grid-template-columns: 6.5rem 1fr 2.5rem; }

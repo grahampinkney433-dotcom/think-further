@@ -57,6 +57,8 @@
 		var brand = el('input', { type: 'text', id: 'avc-brand', name: 'brand', required: 'required', placeholder: 'e.g. Alugence', value: prefill.brand || '' });
 		var url = el('input', { type: 'url', id: 'avc-url', name: 'url', placeholder: 'https://yourbrand.com', value: prefill.url || '' });
 		var comps = el('input', { type: 'text', id: 'avc-competitors', name: 'competitors', placeholder: 'e.g. Competitor A, Competitor B', value: prefill.competitors || '' });
+		var visitors = el('input', { type: 'number', id: 'avc-visitors', name: 'monthly_visitors', min: '0', step: '100', placeholder: 'e.g. 5000', value: prefill.monthly_visitors || '' });
+		var value = el('input', { type: 'number', id: 'avc-value', name: 'avg_value', min: '0', step: '10', placeholder: 'e.g. 500', value: prefill.avg_value || '' });
 		var honey = el('input', { type: 'text', name: 'company_url', tabindex: '-1', autocomplete: 'off' });
 
 		var errorBox = el('div', { class: 'avc-error', role: 'alert', 'aria-live': 'polite' });
@@ -81,6 +83,8 @@
 				brand: brand.value.trim(),
 				url: url.value.trim(),
 				competitors: comps.value.trim(),
+				monthly_visitors: visitors.value.trim(),
+				avg_value: value.value.trim(),
 				company_url: honey.value
 			}, errorBox);
 		} }, [
@@ -89,7 +93,9 @@
 				field('Your brand name', brand),
 				field('Work email', email, 'Required — we send nothing without asking, and it keeps this free tool sustainable.'),
 				field('Website (optional)', url),
-				field('Competitors (optional)', comps, 'Up to ' + MAX_COMP + ', comma-separated. Powers your share-of-voice score.')
+				field('Competitors (optional)', comps, 'Up to ' + MAX_COMP + ', comma-separated. Powers your share-of-voice score.'),
+				field('Monthly website visitors (optional)', visitors, 'For your potential AI-search revenue. We\'ll assume a typical figure if blank.'),
+				field('Average customer value, £ (optional)', value, 'One customer\'s typical value to you. Refines the revenue estimate.')
 			]),
 			// honeypot (visually hidden via .avc-hp)
 			el('div', { class: 'avc-hp', 'aria-hidden': 'true' }, [ el('label', { for: honey.id || '', text: 'Company URL' }), honey ]),
@@ -109,10 +115,11 @@
 	function renderLoading(brand) {
 		clear();
 		var steps = [
-			'Asking ChatGPT, Claude, Perplexity and Gemini about ' + brand + '…',
+			'Asking ChatGPT, Claude, Perplexity, Gemini and Google AI Overviews about ' + brand + '…',
 			'Counting mentions and citations…',
 			'Measuring share of voice vs competitors…',
 			'Reading sentiment and sources…',
+			'Estimating AI-search revenue…',
 			'Scoring AI visibility…'
 		];
 		var line = el('p', { class: 'avc-loading__step', 'aria-live': 'polite', text: steps[0] });
@@ -143,6 +150,8 @@
 			brand: payload.brand,
 			url: payload.url,
 			company_url: payload.company_url || '',
+			monthly_visitors: parseInt(payload.monthly_visitors, 10) || 0,
+			avg_value: parseFloat(payload.avg_value) || 0,
 			competitors: payload.competitors ? payload.competitors.split(/[,\n]+/).map(function (s) { return s.trim(); }).filter(Boolean).slice(0, MAX_COMP) : []
 		};
 
@@ -197,6 +206,11 @@
 				el('p', { class: 'avc-scorecard__blurb', text: d.score_band.blurb })
 			])
 		]));
+
+		/* --- potential AI-search revenue --- */
+		if (d.revenue) {
+			dash.appendChild(revenueCard(d.revenue));
+		}
 
 		/* --- metric cards --- */
 		var grid = el('div', { class: 'avc-metrics' });
@@ -265,6 +279,29 @@
 			el('p', { class: 'avc-card__value', text: value }),
 			sub ? el('p', { class: 'avc-card__sub', text: sub }) : null,
 			el('p', { class: 'avc-card__explain', text: explainer })
+		]);
+	}
+	function money(sym, n) {
+		return sym + Math.round(n).toLocaleString('en-GB');
+	}
+	function revenueCard(rev) {
+		var a = rev.assumptions || {};
+		var assumeText = 'Assumes ' + Number(a.monthly_visitors).toLocaleString('en-GB') + ' monthly visitors, '
+			+ money(rev.symbol, a.avg_value) + ' avg customer value, '
+			+ Math.round((a.ai_search_share || 0) * 100) + '% of journeys via AI search'
+			+ (rev.using_defaults ? ' — typical defaults; add your numbers above for a tailored figure.' : '.');
+		return el('div', { class: 'avc-revenue' }, [
+			el('div', { class: 'avc-revenue__main' }, [
+				el('p', { class: 'avc-eyebrow', text: 'Potential AI-search revenue' }),
+				el('p', { class: 'avc-revenue__range' }, [
+					money(rev.symbol, rev.low), el('span', { class: 'avc-revenue__dash', text: '–' }), money(rev.symbol, rev.high)
+				]),
+				el('p', { class: 'avc-revenue__sub', text: 'estimated annual revenue AI search could add at full visibility' })
+			]),
+			el('div', { class: 'avc-revenue__foot' }, [
+				el('p', { class: 'avc-revenue__assume', text: assumeText }),
+				el('p', { class: 'avc-card__explain', text: rev.explainer })
+			])
 		]);
 	}
 	function sovCard(sov, brand) {

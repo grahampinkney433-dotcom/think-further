@@ -202,8 +202,9 @@ function tf_avc_handle_check( WP_REST_Request $request ) {
 	// Optional business inputs for the revenue estimate.
 	$monthly_visitors = (int) $request->get_param( 'monthly_visitors' );
 	$avg_value        = (float) $request->get_param( 'avg_value' );
+	$conversion_pct   = (float) $request->get_param( 'conversion_rate' ); // referral-traffic conversion %, e.g. 2.5
 
-	$report = tf_avc_aggregate( $brand, $url, $competitors, $results, $monthly_visitors, $avg_value );
+	$report = tf_avc_aggregate( $brand, $url, $competitors, $results, $monthly_visitors, $avg_value, $conversion_pct );
 
 	// Log for usage / cost review.
 	tf_avc_log_check( $email, $brand, $ip, $report );
@@ -559,7 +560,7 @@ function tf_avc_sample_source( $key, $label, $brand, $competitors ) {
 /* ===========================================================================
  * Aggregation → dashboard payload
  * ========================================================================= */
-function tf_avc_aggregate( $brand, $url, $competitors, $results, $monthly_visitors = 0, $avg_value = 0 ) {
+function tf_avc_aggregate( $brand, $url, $competitors, $results, $monthly_visitors = 0, $avg_value = 0, $conversion_pct = 0 ) {
 	$total_sources = count( $results );
 	$mention_count = 0;
 	$cite_count    = 0;
@@ -665,7 +666,7 @@ function tf_avc_aggregate( $brand, $url, $competitors, $results, $monthly_visito
 		'all_sample'    => $any_sample && ! $any_real,
 		'score'         => $score,
 		'score_band'    => tf_avc_score_band( $score ),
-		'revenue'       => tf_avc_revenue_estimate( $score, $monthly_visitors, $avg_value ),
+		'revenue'       => tf_avc_revenue_estimate( $score, $monthly_visitors, $avg_value, $conversion_pct ),
 		'metrics'       => array(
 			'citations'      => array(
 				'value'     => count( $sources_cited ),
@@ -751,15 +752,18 @@ function tf_avc_rank_sources( $urls ) {
  * @param int   $score            AI visibility score (0–100).
  * @param int   $monthly_visitors Supplied monthly visitors (0 = use default).
  * @param float $avg_value        Supplied avg customer value (0 = use default).
+ * @param float $conversion_pct   Supplied referral-traffic conversion RATE as a
+ *                                percentage, e.g. 2.5 (0 = use default).
  * @return array
  */
-function tf_avc_revenue_estimate( $score, $monthly_visitors, $avg_value ) {
-	$using_defaults = ( $monthly_visitors <= 0 ) || ( $avg_value <= 0 );
+function tf_avc_revenue_estimate( $score, $monthly_visitors, $avg_value, $conversion_pct = 0 ) {
 	$visitors = $monthly_visitors > 0 ? (int) $monthly_visitors : (int) TF_AVC_DEFAULT_VISITORS;
 	$value    = $avg_value > 0 ? (float) $avg_value : (float) TF_AVC_DEFAULT_VALUE;
+	$conv     = $conversion_pct > 0 ? ( (float) $conversion_pct / 100 ) : (float) TF_AVC_CONV_RATE;
+	$using_defaults = ( $monthly_visitors <= 0 ) || ( $avg_value <= 0 ) || ( $conversion_pct <= 0 );
 
 	$gap = ( 100 - max( 0, min( 100, $score ) ) ) / 100; // share of AI visibility currently missed
-	$mid = $visitors * 12 * (float) TF_AVC_AI_SEARCH_SHARE * $gap * (float) TF_AVC_CONV_RATE * $value;
+	$mid = $visitors * 12 * (float) TF_AVC_AI_SEARCH_SHARE * $gap * $conv * $value;
 
 	// Round the midpoint to a readable figure, then band ±40%.
 	$mid  = tf_avc_round_money( $mid );
@@ -777,7 +781,7 @@ function tf_avc_revenue_estimate( $score, $monthly_visitors, $avg_value ) {
 			'monthly_visitors' => $visitors,
 			'avg_value'        => $value,
 			'ai_search_share'  => (float) TF_AVC_AI_SEARCH_SHARE,
-			'conversion_rate'  => (float) TF_AVC_CONV_RATE,
+			'conversion_rate'  => $conv,
 		),
 		'explainer'      => __( 'A modelled estimate of the annual revenue AI search could add if your brand were fully visible — based on your visitors and customer value (or typical defaults), the share of journeys AI search now touches, and how much visibility you\'re currently missing. It\'s a directional figure to size the opportunity, not a guarantee.', 'thinkfurther' ),
 	);

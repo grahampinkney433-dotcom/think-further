@@ -59,6 +59,7 @@
 		var comps = el('input', { type: 'text', id: 'avc-competitors', name: 'competitors', placeholder: 'e.g. Competitor A, Competitor B', value: prefill.competitors || '' });
 		var visitors = el('input', { type: 'number', id: 'avc-visitors', name: 'monthly_visitors', min: '0', step: '100', placeholder: 'e.g. 5000', value: prefill.monthly_visitors || '' });
 		var value = el('input', { type: 'number', id: 'avc-value', name: 'avg_value', min: '0', step: '10', placeholder: 'e.g. 500', value: prefill.avg_value || '' });
+		var conv = el('input', { type: 'number', id: 'avc-conv', name: 'conversion_rate', min: '0', max: '100', step: '0.1', placeholder: 'e.g. 2.5', value: prefill.conversion_rate || '' });
 		var honey = el('input', { type: 'text', name: 'company_url', tabindex: '-1', autocomplete: 'off' });
 
 		var errorBox = el('div', { class: 'avc-error', role: 'alert', 'aria-live': 'polite' });
@@ -85,6 +86,7 @@
 				competitors: comps.value.trim(),
 				monthly_visitors: visitors.value.trim(),
 				avg_value: value.value.trim(),
+				conversion_rate: conv.value.trim(),
 				company_url: honey.value
 			}, errorBox);
 		} }, [
@@ -95,7 +97,8 @@
 				field('Website (optional)', url),
 				field('Competitors (optional)', comps, 'Up to ' + MAX_COMP + ', comma-separated. Powers your share-of-voice score.'),
 				field('Monthly website visitors (optional)', visitors, 'For your potential AI-search revenue. We\'ll assume a typical figure if blank.'),
-				field('Average customer value, £ (optional)', value, 'One customer\'s typical value to you. Refines the revenue estimate.')
+				field('Average customer value, £ (optional)', value, 'One customer\'s typical value to you. Refines the revenue estimate.'),
+				field('Referral conversion rate, % (optional)', conv, 'How many referred visitors become customers. Leave blank to use a typical 2%.')
 			]),
 			// honeypot (visually hidden via .avc-hp)
 			el('div', { class: 'avc-hp', 'aria-hidden': 'true' }, [ el('label', { for: honey.id || '', text: 'Company URL' }), honey ]),
@@ -152,6 +155,7 @@
 			company_url: payload.company_url || '',
 			monthly_visitors: parseInt(payload.monthly_visitors, 10) || 0,
 			avg_value: parseFloat(payload.avg_value) || 0,
+			conversion_rate: parseFloat(payload.conversion_rate) || 0,
 			competitors: payload.competitors ? payload.competitors.split(/[,\n]+/).map(function (s) { return s.trim(); }).filter(Boolean).slice(0, MAX_COMP) : []
 		};
 
@@ -288,8 +292,9 @@
 		var a = rev.assumptions || {};
 		var assumeText = 'Assumes ' + Number(a.monthly_visitors).toLocaleString('en-GB') + ' monthly visitors, '
 			+ money(rev.symbol, a.avg_value) + ' avg customer value, '
+			+ round1((a.conversion_rate || 0) * 100) + '% referral conversion, '
 			+ Math.round((a.ai_search_share || 0) * 100) + '% of journeys via AI search'
-			+ (rev.using_defaults ? ' — typical defaults; add your numbers above for a tailored figure.' : '.');
+			+ (rev.using_defaults ? ' — some typical defaults used; add your numbers above for a tailored figure.' : '.');
 		return el('div', { class: 'avc-revenue' }, [
 			el('div', { class: 'avc-revenue__main' }, [
 				el('p', { class: 'avc-eyebrow', text: 'Potential AI-search revenue' }),
@@ -377,6 +382,7 @@
 	/* --- small utils --- */
 	function tick(on) { return el('span', { class: 'avc-tick avc-tick--' + (on ? 'yes' : 'no'), 'aria-label': on ? 'yes' : 'no', text: on ? '✓' : '–' }); }
 	function cap(s) { s = esc(s); return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
+	function round1(n) { return Math.round(n * 10) / 10; }
 	function slug(s) { return esc(s).toLowerCase().replace(/[^a-z0-9]+/g, '-'); }
 
 	/* boot */

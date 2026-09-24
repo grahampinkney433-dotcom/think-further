@@ -2792,6 +2792,12 @@ figcaption {
 	padding: 0.5rem 0;
 }
 
+/* Disclosure button is injected by JS for the mobile nav; the desktop nav
+   uses hover, so it stays hidden there. */
+.submenu-toggle {
+	display: none;
+}
+
 @media (min-width: 861px) {
 	.site-nav__list .sub-menu {
 		position: absolute;
@@ -2842,8 +2848,56 @@ figcaption {
 }
 
 @media (max-width: 860px) {
+	/* Parent row: link + disclosure toggle on one line, submenu below it. */
+	.site-nav__list .menu-item-has-children {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+	}
+
+	.site-nav__list .menu-item-has-children > a {
+		flex: 1 1 auto;
+	}
+
+	/* Disclosure toggle (injected by JS) — visible only on mobile. */
+	.submenu-toggle {
+		flex: none;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 3rem;
+		height: 3rem;
+		margin: 0;
+		padding: 0;
+		background: none;
+		border: 0;
+		color: var(--ink-text);
+		cursor: pointer;
+	}
+
+	.submenu-toggle__icon {
+		display: block;
+		width: 0.6rem;
+		height: 0.6rem;
+		border-right: 2px solid currentColor;
+		border-bottom: 2px solid currentColor;
+		transform: rotate(45deg);
+		transition: transform 0.2s var(--ease-out);
+	}
+
+	.site-nav__list .menu-item-has-children.is-open > .submenu-toggle .submenu-toggle__icon {
+		transform: rotate(-135deg);
+	}
+
+	/* Submenu is collapsed by default; opened only when the user taps. */
 	.site-nav__list .sub-menu {
+		flex-basis: 100%;
+		display: none;
 		padding: 0 0 0.5rem 1rem;
+	}
+
+	.site-nav__list .menu-item-has-children.is-open > .sub-menu {
+		display: block;
 	}
 
 	.site-nav__list .sub-menu a {

@@ -49,6 +49,31 @@
 				navToggle.setAttribute('aria-expanded', 'false');
 			}
 		});
+
+		/* Mobile: collapse each submenu behind a tap-triggered disclosure
+		 * button. Desktop keeps hover (the button is hidden by CSS there),
+		 * and the parent link stays a working link on every viewport. */
+		var parents = nav.querySelectorAll('.menu-item-has-children');
+		for (var i = 0; i < parents.length; i++) {
+			(function (li) {
+				var sub = li.querySelector('.sub-menu');
+				if (!sub) {
+					return;
+				}
+				var link = li.querySelector('a');
+				var btn = document.createElement('button');
+				btn.type = 'button';
+				btn.className = 'submenu-toggle';
+				btn.setAttribute('aria-expanded', 'false');
+				btn.setAttribute('aria-label', link ? ('Toggle submenu for ' + link.textContent.trim()) : 'Toggle submenu');
+				btn.innerHTML = '<span class="submenu-toggle__icon" aria-hidden="true"></span>';
+				btn.addEventListener('click', function () {
+					var open = li.classList.toggle('is-open');
+					btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+				});
+				li.insertBefore(btn, sub);
+			})(parents[i]);
+		}
 	}
 
 	/* ------------------------------------------------------------

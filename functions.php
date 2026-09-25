@@ -9,7 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'TF_THEME_VERSION', '3.0.0' );
+// Asset version = the theme's style.css version, so bumping the theme header
+// automatically cache-busts main.css / main.js (falls back if unavailable).
+if ( ! defined( 'TF_THEME_VERSION' ) ) {
+	$tf_theme_v = function_exists( 'wp_get_theme' ) ? wp_get_theme()->get( 'Version' ) : '';
+	define( 'TF_THEME_VERSION', $tf_theme_v ? $tf_theme_v : '3.3.1' );
+}
 define( 'TF_THEME_DIR', get_template_directory() );
 define( 'TF_THEME_URI', get_template_directory_uri() );
 
